@@ -29,6 +29,7 @@ namespace WMNF_API
         public string file;
         public int length;
         public string title;
+        
     }
 
     [Serializable]
@@ -37,6 +38,7 @@ namespace WMNF_API
         public string day;
         public string start;
         public string end;
+        
     }
 
     [Serializable]

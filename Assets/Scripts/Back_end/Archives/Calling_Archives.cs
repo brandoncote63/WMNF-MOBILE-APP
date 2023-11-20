@@ -37,6 +37,8 @@ public class Calling_Archives : MonoBehaviour
     public TextMeshProUGUI[] PartTitels;
     public GameObject Content;
     public Transform contentPlayOnDemand;
+    public RectTransform vlayoutgroup;
+    
     public GameObject PlayOndemand;
     
     private List<GameObject> createdUIElements = new List<GameObject>();
@@ -101,9 +103,7 @@ public class Calling_Archives : MonoBehaviour
     createdUIElements.Add(archiveElement);// Add to the list of created UI elements
 
 
-        Image thumbimage = archiveElement.transform.Find("Image").GetComponent<Image>();
 
-        Debug.Log("IMAGE URL =" + archive.imagethumb);
 
     // Get references to the TMP fields in the UI element
     TextMeshProUGUI archiveTitleText = archiveElement.transform.Find("Title").GetComponent<TextMeshProUGUI>();
@@ -179,6 +179,7 @@ public class Calling_Archives : MonoBehaviour
     {
         pausebuttons.Clear();
         playbuttons.Clear();
+       
         foreach (Transform child in contentPlayOnDemand)
         {
             if (child.tag == "part")
@@ -190,6 +191,7 @@ public class Calling_Archives : MonoBehaviour
     private void OnArchiveButtonClick(ArchiveData archive)
     {
         
+
         if (archive.playlist[0].data.Count > 0)
         {
             
@@ -274,6 +276,8 @@ public class Calling_Archives : MonoBehaviour
         startTimeTMP.gameObject.SetActive(true);
         endTimeTMP.gameObject.SetActive(true);
         descriptionTMP.gameObject.SetActive(true);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup);
+
     }
 
     private string GenerateShowtimeText(List<Schedule> schedules)

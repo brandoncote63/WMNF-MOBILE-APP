@@ -64,6 +64,7 @@ public class Calling_Playlist : MonoBehaviour
     public List<string> programnames;
     public List<string> endtime;
     public int LEGTH;
+
     private void Start()
     {
         refreshCoroutine = StartCoroutine(RefreshPlaylistData());
@@ -71,7 +72,7 @@ public class Calling_Playlist : MonoBehaviour
 
     private void OnDisable()
     {
-        
+
         if (refreshCoroutine != null)
         {
             StopCoroutine(refreshCoroutine);
@@ -120,29 +121,38 @@ public class Calling_Playlist : MonoBehaviour
 
                 if (itemResponse != null && itemResponse.playlist != null && itemResponse.playlist.Count > 0)
                 {
-                    
+
                     List<PlaylistItem> playlistItems = new List<PlaylistItem>();
-                    
+
                     foreach (Playlist playlist in itemResponse.playlist)
                     {
-                        
+
 
                         if (playlist.playlist != null)
 
                         {
                             LEGTH = playlist.playlist.Count;
-                            
+
+                            foreach (PlaylistItem child in playlist.playlist)
+                            {
+                                child.program = playlist.name;
+                            }
+
                             playlistItems.AddRange(playlist.playlist);
+
                             programnames.Add(playlist.name);
                             endtime.Add(playlist.end_time);
                         }
-                        
+
 
                     }
-                    
 
-                        Debug.Log("Number of items in response: " + playlistItems.Count);
+
+                    Debug.Log("Number of items in response: " + playlistItems.Count);
+
                     callback(playlistItems);
+
+
                 }
                 else
                 {
@@ -157,7 +167,7 @@ public class Calling_Playlist : MonoBehaviour
             }
         }
     }
-   
+
 
     private void OnPlaylistDataReceived(List<PlaylistItem> playlistData)
     {
@@ -170,10 +180,13 @@ public class Calling_Playlist : MonoBehaviour
 
             // Reverse the order of the playlistData list
             playlistData.Reverse();
-           
+
+
             foreach (PlaylistItem item in playlistData)
             {
-                item.program = programnames[0];
+
+
+
 
 
 
@@ -209,10 +222,10 @@ public class Calling_Playlist : MonoBehaviour
                             Debug.Log(formattedStartTime);
                             ///////////////////////////////////////////////////////////////////
 
-                            
+
                             StartCoroutine(LoadSpriteImage(item.album_art, albumArtImage));
-                             
-                            
+
+
 
                             startTimeText.text = formattedStartTime + "-" + item.trackName;
                             programText.text = item.program;
@@ -274,9 +287,9 @@ public class Calling_Playlist : MonoBehaviour
         if (DateTime.TryParseExact(inputDate, "MM-dd-yyyy HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
         {
             // Format the parsed date to "h:mm tt" (e.g., "4:11 PM")
-            
+
             string formattedDate = parsedDate.ToString("h:mm tt");
-         
+
             return formattedDate;
         }
         else

@@ -8,13 +8,14 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using HtmlAgilityPack;
 using WMNF_API;
+using RenderHeads.Media.AVProVideo;
 
 public class Calling_Archives : MonoBehaviour
 {
     public GameObject archivePrefab;
     public Transform archiveContainer;
     public float refreshInterval = 60f;
-
+    public MediaPlayer[] mediaPlayer;
     public TextMeshProUGUI titleTMP;
     public TextMeshProUGUI showtimesTMP;
     public TextMeshProUGUI dayOfWeekTMP;
@@ -30,12 +31,14 @@ public class Calling_Archives : MonoBehaviour
     public AudioSource audioSource;
     public List<AudioClip> audioClips;
     public List<Button> playbuttons;
+    public List<Button> pausebuttons;
     public List<int> playbuttonsint;
     public GameObject parts;
     public TextMeshProUGUI[] PartTitels;
     public GameObject Content;
     public Transform contentPlayOnDemand;
     public GameObject PlayOndemand;
+    
     private List<GameObject> createdUIElements = new List<GameObject>();
     private List<AudioSource> playingAudioSources = new List<AudioSource>();
 
@@ -98,6 +101,10 @@ public class Calling_Archives : MonoBehaviour
     createdUIElements.Add(archiveElement);// Add to the list of created UI elements
 
 
+        Image thumbimage = archiveElement.transform.Find("Image").GetComponent<Image>();
+
+        Debug.Log("IMAGE URL =" + archive.imagethumb);
+
     // Get references to the TMP fields in the UI element
     TextMeshProUGUI archiveTitleText = archiveElement.transform.Find("Title").GetComponent<TextMeshProUGUI>();
     TextMeshProUGUI showtimesText = archiveElement.transform.Find("ShowtimesObject/Showtimes").GetComponent<TextMeshProUGUI>();
@@ -129,35 +136,77 @@ public class Calling_Archives : MonoBehaviour
    // part2Button.onClick.RemoveAllListeners();
      //   part2Button.onClick.AddListener(() => audiofuntion(1)); //PlayMP3(archive.playlist[0].data[1].file));
 }
-    public void audiofuntion(int clip)
+    public void audiofuntionstart(int clip)
+    {
+       
+        foreach (MediaPlayer m in mediaPlayer)
+        {
+            m.Stop();
+
+        }
+        foreach(Button b in pausebuttons)
+        {
+            if (b == pausebuttons[clip]) { }
+            else { b.onClick.Invoke(); }
+            
+        }
+        
+
+        Debug.Log("clip =" + clip);
+        mediaPlayer[clip].Play();
+        //audioSource.clip = audioClips[clip];
+        //audioSource.Play();
+    }
+    public void audiofuntionstop(int clip)
     {
         Debug.Log("clip =" + clip);
-        audioSource.clip = audioClips[clip];
-        audioSource.Play();
+        mediaPlayer[clip].Stop();
+        
     }
-    public void updateBuutons(Button playthisbutton, int which)
+    public void updateBuutons(Button playthisbutton, Button pasuebutton, int which)
     {
         Debug.Log("THE BUTTON: " + playthisbutton.name + "which: " + which);
         
         playthisbutton.onClick.RemoveAllListeners();
-        playthisbutton.onClick.AddListener(() => audiofuntion(which));
+        playthisbutton.onClick.AddListener(() => audiofuntionstart(which));
+        pasuebutton.onClick.RemoveAllListeners();
+        pasuebutton.onClick.AddListener(() => audiofuntionstop(which));
+        pausebuttons.Add(pasuebutton);
         playbuttons.Add(playthisbutton);
         
     }
+    public void back()
+    {
+        pausebuttons.Clear();
+        playbuttons.Clear();
+        foreach (Transform child in contentPlayOnDemand)
+        {
+            if (child.tag == "part")
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
     private void OnArchiveButtonClick(ArchiveData archive)
     {
+        
         if (archive.playlist[0].data.Count > 0)
         {
+            
             var iterationCount = archive.playlist[0].data.Count;
             for (int i = 0; i < iterationCount; i++)
             {
-                StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
+                //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
+                
+
+                mediaPlayer[i].OpenMedia(new MediaPath(archive.playlist[0].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
                 Debug.Log("part" + i + "file:" + archive.playlist[0].data[i].file);
                 GameObject partpart = Instantiate(parts, contentPlayOnDemand);
                 partpart.SetActive(true);
                 TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
                 Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
-                updateBuutons(playbutton, i);
+                Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
+                updateBuutons(playbutton, pausebutton, i);
 
              
                 title.text = archive.playlist[0].data[i].title;
@@ -292,6 +341,8 @@ public class Calling_Archives : MonoBehaviour
     {
         Debug.Log("Attempting to load audio from URL: " + mp3URL);
 
+
+
         using (var www = UnityWebRequestMultimedia.GetAudioClip(mp3URL, AudioType.MPEG))
         {
             yield return www.SendWebRequest();
@@ -330,6 +381,7 @@ public class Calling_Archives : MonoBehaviour
 
     public void SetContentActive()
     {
+        back();
         if (Content != null)
         {
             Content.SetActive(true);

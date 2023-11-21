@@ -23,6 +23,8 @@ public class Calling_Archives : MonoBehaviour
     public TextMeshProUGUI endTimeTMP;
     public TextMeshProUGUI descriptionTMP;
     public TextMeshProUGUI headertitle;
+    public Image thumbnailImage;
+
     public Button part1Button;
     public Button subpageButton;
     public Button part2Button;
@@ -111,6 +113,11 @@ public class Calling_Archives : MonoBehaviour
     TextMeshProUGUI hostText = archiveElement.transform.Find("HostObject/Host").GetComponent<TextMeshProUGUI>();
 
     archiveTitleText.text = $"<b>{HttpUtility.HtmlDecode(archive.title)}</b>";
+
+        Image thumbnail = archiveElement.transform.Find("Image").GetComponent<Image>();
+        StartCoroutine(LoadSpriteImage("https://wmnf.s3.amazonaws.com/wp-content/uploads/2023/09/noevents-min-125x125.jpg", thumbnail));
+
+
 
         // Add a button click listener to expand the archive
         Button archiveButton = archiveElement.GetComponentInChildren<Button>();
@@ -210,6 +217,7 @@ public class Calling_Archives : MonoBehaviour
                 Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
                 updateBuutons(playbutton, pausebutton, i);
 
+               
              
                 title.text = archive.playlist[0].data[i].title;
             }
@@ -270,7 +278,7 @@ public class Calling_Archives : MonoBehaviour
         descriptionTMP.text = descriptionText;
 
         archiveContainer.gameObject.SetActive(false);
-
+        
         titleTMP.gameObject.SetActive(true);
         showtimesTMP.gameObject.SetActive(true);
         dayOfWeekTMP.gameObject.SetActive(true);
@@ -429,6 +437,27 @@ public class Calling_Archives : MonoBehaviour
             doc.LoadHtml(html);
 
             return doc.DocumentNode.InnerText;
+        }
+    }
+    private IEnumerator LoadSpriteImage(string url, Image image)
+    {
+        if (!string.IsNullOrEmpty(url))
+        {
+            using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+                    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                    image.sprite = sprite;
+                }
+                else
+                {
+                    Debug.LogError("Error loading image: " + www.error);
+                }
+            }
         }
     }
 }

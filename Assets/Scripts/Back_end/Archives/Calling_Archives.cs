@@ -117,7 +117,7 @@ public class Calling_Archives : MonoBehaviour
         archiveButton.onClick.AddListener(() => OnArchiveButtonClick(archive));
 
         string showtimeText = GenerateShowtimeText(archive.schedule);
-
+       
     showtimesText.text = showtimeText;
 
     if (archive.host != null && archive.host.Count > 0)
@@ -258,7 +258,8 @@ public class Calling_Archives : MonoBehaviour
 
         if (!string.IsNullOrEmpty(archive.schedule[0].end))
         {
-            endTimeTMP.text = archive.schedule[0].end;
+            EndtimeFormatting(archive);
+            //endTimeTMP.text = archive.schedule[0].end;
         }
         else
         {
@@ -310,6 +311,30 @@ public class Calling_Archives : MonoBehaviour
         string showtimeText = string.Join(", ", showtimeStrings);
 
         return showtimeText;
+    }
+
+    public void EndtimeFormatting(ArchiveData archive)
+    {
+       
+            string firsttoo = archive.schedule[0].end.Substring(0, 2);
+
+            int result = 0;
+            for (int i = 0; i < firsttoo.Length; i++)
+            {
+                char letter = firsttoo[i];
+                result = 10 * result + (letter - 48);
+            }
+            Debug.Log(result);
+            string showtimeT;
+
+            if (result < 12) { showtimeT = result.ToString() + ":00 AM"; }
+
+            else if (result == 12) { showtimeT = "12:00 PM"; }
+            else { showtimeT = (result - 12).ToString() + ":00 PM"; }
+            if (result == 0) { showtimeT = "12:00 AM"; }
+
+        endTimeTMP.text = showtimeT;
+        
     }
 
     private void ClearArchiveUI()

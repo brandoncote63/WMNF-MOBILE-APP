@@ -27,7 +27,11 @@ public static class APIManager_Archives
             {
                 try
                 {
-                    Root rootData = JsonUtility.FromJson<Root>(www.downloadHandler.text);
+                    string jsonText = www.downloadHandler.text;
+                    jsonText = jsonText.Replace("image-thumb","imagethumb");
+
+                    Root rootData = JsonUtility.FromJson<Root>(jsonText);
+                    
                     onComplete?.Invoke(rootData.data);
                 }
                 catch (Exception e)

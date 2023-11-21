@@ -114,9 +114,10 @@ public class Calling_Archives : MonoBehaviour
 
     archiveTitleText.text = $"<b>{HttpUtility.HtmlDecode(archive.title)}</b>";
 
+        // SET THUMBNAIL 
         Image thumbnail = archiveElement.transform.Find("Image").GetComponent<Image>();
-        StartCoroutine(LoadSpriteImage("https://wmnf.s3.amazonaws.com/wp-content/uploads/2023/09/noevents-min-125x125.jpg", thumbnail));
-
+        StartCoroutine(LoadSpriteImage(archive.imagethumb, thumbnail));
+        Debug.Log("HERE     " + archive.imagethumb);
 
 
         // Add a button click listener to expand the archive

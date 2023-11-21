@@ -6,7 +6,7 @@ public class RSSFeedItem
     public string title;
     public string link;
     public string description;
-    public string pubDate;
+    public string start;
     public string creator;
     public List<string> category;
     public string guid;

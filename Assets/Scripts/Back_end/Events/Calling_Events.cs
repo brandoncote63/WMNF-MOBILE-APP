@@ -25,12 +25,14 @@ public class Calling_Events : MonoBehaviour
     public TextMeshProUGUI descriptionUIText;
     public TextMeshProUGUI readMoreUIText;
     public TextMeshProUGUI dateTMP; // TextMeshProUGUI for date
-
+    public TextMeshProUGUI timeTime;
     public GameObject Content; // Assign your UI element in the Inspector
     public TextMeshProUGUI headertitle;
 
     private GameObject currentExpandedEvent;
     private List<GameObject> createdEventElements = new List<GameObject>(); // Keep track of created event elements
+
+    public RectTransform vlayoutgroup;
 
     public Button shareButton1; // Button for sharing
     public Button shareButton2; // Button for sharing
@@ -65,19 +67,30 @@ public class Calling_Events : MonoBehaviour
 
                     TextMeshProUGUI titleTMP = eventElement.transform.Find("Title").GetComponent<TextMeshProUGUI>();
                     TextMeshProUGUI timeTMP = eventElement.transform.Find("Time").GetComponent<TextMeshProUGUI>();
-
+                    
                     string decodedTitle = System.Web.HttpUtility.HtmlDecode(item.title);
                     titleTMP.text = decodedTitle;
 
-                    if (System.DateTime.TryParse(item.pubDate, out System.DateTime eventDate))
+                    
+                    if (System.DateTime.TryParse(item.start, out System.DateTime eventDate))
                     {
                         string formattedDate = eventDate.ToString("MMM dd");
-
+                        string formattedTime = eventDate.ToString("t");
                         // Update the date TMP within the event prefab
                         dateTMP = eventElement.transform.Find("Image/Image1/DateTMP").GetComponent<TextMeshProUGUI>();
                         dateTMP.text = formattedDate;
+
+                        timeTMP.text = formattedTime; 
+                    }
+                    if (System.DateTime.TryParse(item.endTime , out System.DateTime eeventDate))
+                    {
+                        string formattedTimeE = eeventDate.ToString("t");
+
+                        timeTMP.text = timeTMP.text + " - " + formattedTimeE;
+
                     }
                 }
+                LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup);
             }
             else
             {
@@ -102,7 +115,7 @@ public class Calling_Events : MonoBehaviour
 
         // Assign date, title, time, venue, link, and description manually
         titleUIText.text = item.title;
-        timeUIText.text = item.pubDate;
+        timeUIText.text = item.start;
         venueUIText.text = ""; // Manually assign venue here
         headertitle.text = item.title;
 
@@ -115,7 +128,8 @@ public class Calling_Events : MonoBehaviour
 
         if (!string.IsNullOrEmpty(extractedLink))
         {
-            linkUIText.text = extractedLink;
+            linkUIText.GetComponent<Button>().onClick.RemoveAllListeners();
+            linkUIText.GetComponent<Button>().onClick.AddListener(() => OpenLink(extractedLink));
         }
         else
         {

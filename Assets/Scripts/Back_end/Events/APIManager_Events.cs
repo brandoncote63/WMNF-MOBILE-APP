@@ -52,7 +52,7 @@ public static class APIManager_Events
                 title = dataItem["title"],
                 link = dataItem["link"],
                 description = dataItem["content"],
-                pubDate = dataItem["start"],
+                start = dataItem["start"],
                 endTime = dataItem["end"], // Assuming you have an "end" field in your JSON
                 creator = "", // Set creator field if available in JSON
                 category = new List<string>(), // Set category list if available in JSON

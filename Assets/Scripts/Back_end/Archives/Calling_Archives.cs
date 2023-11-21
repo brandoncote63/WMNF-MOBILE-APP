@@ -117,7 +117,7 @@ public class Calling_Archives : MonoBehaviour
         // SET THUMBNAIL 
         Image thumbnail = archiveElement.transform.Find("Image").GetComponent<Image>();
         StartCoroutine(LoadSpriteImage(archive.imagethumb, thumbnail));
-        Debug.Log("HERE     " + archive.imagethumb);
+        
 
 
         // Add a button click listener to expand the archive

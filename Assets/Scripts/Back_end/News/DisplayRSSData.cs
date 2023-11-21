@@ -22,9 +22,14 @@ public class DisplayRSSData : MonoBehaviour
 
     public GameObject Content; // Assign your UI element in the Inspector
     public TextMeshProUGUI headertitle;
-
+    public TextMeshProUGUI page;
     public Button shareButton1;
     public Button shareButton2;
+
+    public int pageNumber = 1;
+
+
+  
 
 
     private IEnumerator Start()
@@ -54,6 +59,8 @@ public class DisplayRSSData : MonoBehaviour
 
             TextMeshProUGUI titleTMP = dataElement.transform.Find("Title").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI dateTMP = dataElement.transform.Find("Date").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI tag = dataElement.transform.Find("tag/TagText").GetComponent <TextMeshProUGUI>();
+            
 
             // Make the title bold using rich text formatting
             titleTMP.text = $"<b>{item.Title}</b>";
@@ -61,17 +68,24 @@ public class DisplayRSSData : MonoBehaviour
             // Format the date as "MMM d, yyyy" (e.g., "Sep 1, 2023")
             dateTMP.text = item.PubDate.ToString("MMM d, yyyy");
 
+            tag.text = item.Category;
+
             // Add a button click listener to expand the data
             Button dataButton = dataElement.GetComponentInChildren<Button>();
             dataButton.onClick.AddListener(() => OnDataButtonClick(item));
 
+            
+
             Debug.Log($"Displayed RSS item: {item.Title}");
 
+           
+
             // Yield to the next frame before processing the next item
-            
+
         }
         yield return null;
         Debug.Log($"Created {createdDataElements.Count} data elements."); // Log the number of data elements created
+        
 
     }
 
@@ -159,6 +173,7 @@ public class DisplayRSSData : MonoBehaviour
         public string post_id;
         public string Title;
         public string Link;
+        public string Category;
         public string Description;
         public DateTime PubDate;
     }
@@ -187,7 +202,9 @@ public class DisplayRSSData : MonoBehaviour
                 rssItem.Title = itemNode.SelectSingleNode("title")?.InnerText;
                 rssItem.Link = itemNode.SelectSingleNode("link")?.InnerText;
                 rssItem.Description = itemNode.SelectSingleNode("description")?.InnerText;
-
+                rssItem.Category = itemNode.SelectSingleNode("category").InnerText;
+                string tag = itemNode.SelectSingleNode("category").InnerText;
+                Debug.Log("HERE     :  " + tag);
                 // Use a unique identifier like "guid" to differentiate items
                 rssItem.post_id = itemNode.SelectSingleNode("post-id")?.InnerText;
 
@@ -251,6 +268,26 @@ public class DisplayRSSData : MonoBehaviour
     {
         // Implement a platform-specific share dialogue here (e.g., using native plugins).
         Debug.Log("Sharing on this platform is not supported.");
+    }
+
+    public void pagechange(bool more)
+    {
+        if (more) { pageNumber++;
+            page.text = "Page: " + pageNumber.ToString();
+            feedUrl = "http://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
+            StartCoroutine(FetchAndDisplayRSSData()); }
+
+        else {
+
+            if (pageNumber > 1)
+            { pageNumber = pageNumber - 1;
+                page.text = "Page: " + pageNumber.ToString();
+                feedUrl = "http://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
+                StartCoroutine(FetchAndDisplayRSSData()); }
+            else { }
+           
+            
+             }
     }
 
 

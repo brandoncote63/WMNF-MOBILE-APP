@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public GameObject[] pages;
-
+    public GameObject[] content;
     public Image[] image;
     public Color color;
 
@@ -42,13 +42,14 @@ public class UIManager : MonoBehaviour
 
         pages[0].SetActive(true);
         Iconcolor(0);
+        foreach (GameObject g in content) { g.SetActive(true); }
     }
     public void Playlist()
     {
         foreach (GameObject i in pages) { if (i == pages[0]) { }
             else { i.SetActive(false); }
         }
-
+        foreach (GameObject g in content) { g.SetActive(true); }
         pages[1].SetActive(true);
     }
     public void Upnext()
@@ -58,7 +59,7 @@ public class UIManager : MonoBehaviour
             if (i == pages[0]) { }
             else { i.SetActive(false); }
         }
-
+        foreach (GameObject g in content) { g.SetActive(true); }
         pages[2].SetActive(true);
     }
     public void Archive()
@@ -68,7 +69,7 @@ public class UIManager : MonoBehaviour
             if (i == pages[0]) { }
             else { i.SetActive(false); }
         }
-
+        foreach (GameObject g in content) { g.SetActive(true); }
         pages[3].SetActive(true);
         Iconcolor(1);
     }
@@ -80,6 +81,7 @@ public class UIManager : MonoBehaviour
             else { i.SetActive(false); }
         }
         pages[4].SetActive(true);
+        foreach (GameObject g in content) { g.SetActive(true); }
     }
     public void News()
     {
@@ -90,6 +92,7 @@ public class UIManager : MonoBehaviour
         }
         Iconcolor(2);
         pages[5].SetActive(true);
+        foreach (GameObject g in content) { g.SetActive(true); }
     }
     public void NewsSub()
     {
@@ -98,7 +101,7 @@ public class UIManager : MonoBehaviour
             if (i == pages[0]) { }
             else { i.SetActive(false); }
         }
-
+        foreach (GameObject g in content) { g.SetActive(true); }
         pages[6].SetActive(true);
     }
     public void Events()
@@ -110,6 +113,7 @@ public class UIManager : MonoBehaviour
         }
         pages[7].SetActive(true);
         Iconcolor(3);
+        foreach (GameObject g in content) { g.SetActive(true); }
     }
     public void EventsSub()
     {
@@ -118,7 +122,7 @@ public class UIManager : MonoBehaviour
             if (i == pages[0]) { }
             else { i.SetActive(false); }
         }
-
+        foreach (GameObject g in content) { g.SetActive(true); }
         pages[8].SetActive(true);
     }
     public void Scedual()
@@ -128,7 +132,7 @@ public class UIManager : MonoBehaviour
             if (i == pages[0]) { }
             else { i.SetActive(false); }
         }
-
+        foreach (GameObject g in content) { g.SetActive(true); }
         pages[9].SetActive(true);
         Iconcolor(4);
     }
@@ -139,7 +143,7 @@ public class UIManager : MonoBehaviour
             if (i == pages[0]) { }
             else { i.SetActive(false); }
         }
-
+        foreach (GameObject g in content) { g.SetActive(true); }
         pages[10].SetActive(true);
     }
     public void Donate()
@@ -149,7 +153,7 @@ public class UIManager : MonoBehaviour
             if (i == pages[0]) { }
             else { i.SetActive(false); }
         }
-
+        foreach (GameObject g in content) { g.SetActive(true); }
         pages[11].SetActive(true);
         Iconcolor(5);
     }

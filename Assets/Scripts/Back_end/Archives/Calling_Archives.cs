@@ -442,6 +442,7 @@ public class Calling_Archives : MonoBehaviour
     }
     private IEnumerator LoadSpriteImage(string url, Image image)
     {
+       
         if (!string.IsNullOrEmpty(url))
         {
             using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))

@@ -9,6 +9,7 @@ using HtmlAgilityPack;
 using System.Web;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using UnityEngine.Networking;
 
 public class DisplayRSSData : MonoBehaviour
 {
@@ -60,7 +61,12 @@ public class DisplayRSSData : MonoBehaviour
             TextMeshProUGUI titleTMP = dataElement.transform.Find("Title").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI dateTMP = dataElement.transform.Find("Date").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI tag = dataElement.transform.Find("tag/TagText").GetComponent <TextMeshProUGUI>();
-            
+
+            //image thumbnail
+
+
+            Image thumbnail = dataElement.transform.Find("Image").GetComponent<Image>();
+            StartCoroutine(LoadSpriteImage("https://wmnf.s3.amazonaws.com/wp-content/uploads/2023/11/CNC06630-150x100.jpg", thumbnail));
 
             // Make the title bold using rich text formatting
             titleTMP.text = $"<b>{item.Title}</b>";
@@ -288,6 +294,31 @@ public class DisplayRSSData : MonoBehaviour
            
             
              }
+    }
+
+    private IEnumerator LoadSpriteImage(string url, Image image)
+    {
+        
+        if (!string.IsNullOrEmpty(url))
+        {
+            Debug.Log("AAAAAAAAAAAAAAAAAAA");
+            using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
+            {
+                yield return www.SendWebRequest();
+                
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    
+                    Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+                    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                    image.sprite = sprite;
+                }
+                else
+                {
+                    Debug.LogError("Error loading image: " + www.error);
+                }
+            }
+        }
     }
 
 

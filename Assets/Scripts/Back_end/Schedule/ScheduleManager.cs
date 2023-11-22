@@ -8,9 +8,13 @@ using System;
 using System.Collections;
 using WMNF_API;
 using HtmlAgilityPack;
+using RenderHeads.Media.AVProVideo;
 
 public class ScheduleManager : MonoBehaviour
 {
+    
+    public MediaPlayer[] mediaPlayer;
+    public GameObject parts;
     public GameObject[] containers;
     public GameObject dayPrefab;
     public string apiUrl = "https://www.wmnf.org/api/programs.php?ver=20160427";
@@ -25,9 +29,15 @@ public class ScheduleManager : MonoBehaviour
     public Button part3Button;
     public AudioSource audioSource;
     public TextMeshProUGUI headertitle;
-
+    public RectTransform vertlayoutg;
+    public Transform contentPlayOnDemand;
+    public GameObject PlayOndemand;
     private List<UnityWebRequest> activeRequests = new List<UnityWebRequest>();
     private List<Coroutine> activeCoroutines = new List<Coroutine>();
+
+    
+    public List<Button> playbuttons;
+    public List<Button> pausebuttons;
 
     private void OnApplicationQuit()
     {
@@ -45,7 +55,7 @@ public class ScheduleManager : MonoBehaviour
     private IEnumerator Start()
     {
         UnityWebRequest www = UnityWebRequest.Get(apiUrl);
-        www.timeout = 100;
+        www.timeout = 15;
         activeRequests.Add(www);
         yield return www.SendWebRequest();
         activeRequests.Remove(www);
@@ -57,6 +67,7 @@ public class ScheduleManager : MonoBehaviour
         }
 
         string json = www.downloadHandler.text;
+        json = json.Replace("image-thumb", "imageThumb");
         var scheduleResponse = JsonConvert.DeserializeObject<ScheduleResponse>(json);
 
         if (scheduleResponse != null && scheduleResponse.data != null)
@@ -134,11 +145,15 @@ public class ScheduleManager : MonoBehaviour
 
                     Button programButton = prefab.GetComponentInChildren<Button>();
                     programButton.onClick.AddListener(() => OnScheduleButtonClick(program));
+
+                    prefab.SetActive(true);
                 }
                 else
                 {
                     Debug.LogError($"Unknown day of the week: {dayAsString} for program: " + program.title);
                 }
+
+                
             }
         }
     }
@@ -169,20 +184,28 @@ public class ScheduleManager : MonoBehaviour
 
     private IEnumerator LoadImage(Image image, string imageUrl)
     {
+       
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageUrl);
+        
         yield return www.SendWebRequest();
 
+        
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.LogError("Error loading image: " + www.error);
             yield break;
         }
+        
 
         Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+        
         if (texture != null)
         {
+           
+
             image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             image.rectTransform.sizeDelta = new Vector2(117, 113);
+            
         }
     }
 
@@ -221,13 +244,13 @@ public class ScheduleManager : MonoBehaviour
 
     private Dictionary<string, int> dayToIndex = new Dictionary<string, int>
     {
-        { "Sunday", 0 },
-        { "Monday", 1 },
-        { "Tuesday", 2 },
-        { "Wednesday", 3 },
-        { "Thursday", 4 },
-        { "Friday", 5 },
-        { "Saturday", 6 }
+        { "Sunday", 6 },
+        { "Monday", 0 },
+        { "Tuesday", 1 },
+        { "Wednesday", 2 },
+        { "Thursday", 3 },
+        { "Friday", 4 },
+        { "Saturday", 5 }
     };
 
     private void SetShowtimeTMPFields(Schedule schedule)
@@ -241,10 +264,42 @@ public class ScheduleManager : MonoBehaviour
     {
         Debug.Log("Schedule button clicked for program: " + program.title);
 
+
+        if (program.playlist[0].data.Count > 0)
+        {
+
+            var iterationCount = program.playlist[0].data.Count;
+            for (int i = 0; i < iterationCount; i++)
+            {
+                //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
+
+
+                mediaPlayer[i].OpenMedia(new MediaPath(program.playlist[0].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
+                Debug.Log("part" + i + "file:" + program.playlist[0].data[i].file);
+                GameObject partpart = Instantiate(parts, contentPlayOnDemand);
+                partpart.SetActive(true);
+                TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
+                Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
+                Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
+                updateBuutons(playbutton, pausebutton, i);
+
+
+
+                title.text = program.playlist[0].data[i].title;
+            }
+
+
+        }
+        else
+        {
+            PlayOndemand.SetActive(false);
+        }
+
         titleTMP.text = program.title;
         headertitle.text = program.title;
         descriptionTMP.text = FormatHtmlContent(program.content);
         SetMP3Tracks(program.playlist);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(vertlayoutg);
     }
 
     private void SetMP3Tracks(List<Playlist> playlists)
@@ -280,8 +335,49 @@ public class ScheduleManager : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(mp3URL) && audioSource != null)
         {
+            Debug.Log(mp3URL.ToString());
             StartCoroutine(LoadAudioFromURL(mp3URL));
         }
+    }
+
+    public void updateBuutons(Button playthisbutton, Button pasuebutton, int which)
+    {
+        Debug.Log("THE BUTTON: " + playthisbutton.name + "which: " + which);
+
+        playthisbutton.onClick.RemoveAllListeners();
+        playthisbutton.onClick.AddListener(() => audiofuntionstart(which));
+        pasuebutton.onClick.RemoveAllListeners();
+        pasuebutton.onClick.AddListener(() => audiofuntionstop(which));
+        pausebuttons.Add(pasuebutton);
+        playbuttons.Add(playthisbutton);
+
+    }
+    public void audiofuntionstart(int clip)
+    {
+
+        foreach (MediaPlayer m in mediaPlayer)
+        {
+            m.Stop();
+
+        }
+        foreach (Button b in pausebuttons)
+        {
+            if (b == pausebuttons[clip]) { }
+            else { b.onClick.Invoke(); }
+
+        }
+
+
+        Debug.Log("clip =" + clip);
+        mediaPlayer[clip].Play();
+        //audioSource.clip = audioClips[clip];
+        //audioSource.Play();
+    }
+    public void audiofuntionstop(int clip)
+    {
+        Debug.Log("clip =" + clip);
+        mediaPlayer[clip].Stop();
+
     }
 
     private IEnumerator LoadAudioFromURL(string mp3URL)

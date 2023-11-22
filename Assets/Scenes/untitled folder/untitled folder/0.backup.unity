@@ -2115,38 +2115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mediaPlayer:
-  - {fileID: 69544829}
-  - {fileID: 1084337304}
-  - {fileID: 2009280973}
-  - {fileID: 535474768}
-  - {fileID: 263814968}
-  - {fileID: 564317941}
-  - {fileID: 747145531}
-  - {fileID: 1278971650}
-  - {fileID: 1047664867}
-  - {fileID: 2098070832}
-  - {fileID: 1647336564}
-  - {fileID: 1793264390}
-  - {fileID: 1788163397}
-  - {fileID: 788927744}
-  - {fileID: 982927805}
-  - {fileID: 1658606914}
-  - {fileID: 1560484545}
-  - {fileID: 1308299226}
-  - {fileID: 1678213812}
-  - {fileID: 545520765}
-  - {fileID: 2085455038}
-  - {fileID: 141829184}
-  - {fileID: 2044179189}
-  - {fileID: 637480381}
-  - {fileID: 665480418}
-  - {fileID: 210742206}
-  - {fileID: 487079818}
-  - {fileID: 289563310}
-  - {fileID: 2022334599}
-  - {fileID: 1688121606}
-  parts: {fileID: 9175882705634952352, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -2167,12 +2135,8 @@ MonoBehaviour:
   part2Button: {fileID: 1390682268}
   part3Button: {fileID: 1593523436}
   audioSource: {fileID: 1635405943}
-  headertitle: {fileID: 662336208}
+  headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
-  contentPlayOnDemand: {fileID: 173699262}
-  PlayOndemand: {fileID: 173699261}
-  playbuttons: []
-  pausebuttons: []
 --- !u!1 &76228000
 GameObject:
   m_ObjectHideFlags: 0
@@ -2631,38 +2595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mediaPlayer:
-  - {fileID: 69544829}
-  - {fileID: 1084337304}
-  - {fileID: 2009280973}
-  - {fileID: 535474768}
-  - {fileID: 263814968}
-  - {fileID: 564317941}
-  - {fileID: 747145531}
-  - {fileID: 1278971650}
-  - {fileID: 1047664867}
-  - {fileID: 2098070832}
-  - {fileID: 1647336564}
-  - {fileID: 1793264390}
-  - {fileID: 1788163397}
-  - {fileID: 788927744}
-  - {fileID: 982927805}
-  - {fileID: 1658606914}
-  - {fileID: 1560484545}
-  - {fileID: 1308299226}
-  - {fileID: 1678213812}
-  - {fileID: 545520765}
-  - {fileID: 2085455038}
-  - {fileID: 141829184}
-  - {fileID: 2044179189}
-  - {fileID: 637480381}
-  - {fileID: 665480418}
-  - {fileID: 210742206}
-  - {fileID: 487079818}
-  - {fileID: 289563310}
-  - {fileID: 2022334599}
-  - {fileID: 1688121606}
-  parts: {fileID: 9175882705634952352, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -2683,12 +2615,8 @@ MonoBehaviour:
   part2Button: {fileID: 1390682268}
   part3Button: {fileID: 1593523436}
   audioSource: {fileID: 1635405943}
-  headertitle: {fileID: 662336208}
+  headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
-  contentPlayOnDemand: {fileID: 173699262}
-  PlayOndemand: {fileID: 173699261}
-  playbuttons: []
-  pausebuttons: []
 --- !u!1 &113324768
 GameObject:
   m_ObjectHideFlags: 0
@@ -4250,38 +4178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mediaPlayer:
-  - {fileID: 69544829}
-  - {fileID: 1084337304}
-  - {fileID: 2009280973}
-  - {fileID: 535474768}
-  - {fileID: 263814968}
-  - {fileID: 564317941}
-  - {fileID: 747145531}
-  - {fileID: 1278971650}
-  - {fileID: 1047664867}
-  - {fileID: 2098070832}
-  - {fileID: 1647336564}
-  - {fileID: 1793264390}
-  - {fileID: 1788163397}
-  - {fileID: 788927744}
-  - {fileID: 982927805}
-  - {fileID: 1658606914}
-  - {fileID: 1560484545}
-  - {fileID: 1308299226}
-  - {fileID: 1678213812}
-  - {fileID: 545520765}
-  - {fileID: 2085455038}
-  - {fileID: 141829184}
-  - {fileID: 2044179189}
-  - {fileID: 637480381}
-  - {fileID: 665480418}
-  - {fileID: 210742206}
-  - {fileID: 487079818}
-  - {fileID: 289563310}
-  - {fileID: 2022334599}
-  - {fileID: 1688121606}
-  parts: {fileID: 9175882705634952352, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -4302,12 +4198,8 @@ MonoBehaviour:
   part2Button: {fileID: 1390682268}
   part3Button: {fileID: 1593523436}
   audioSource: {fileID: 1635405943}
-  headertitle: {fileID: 662336208}
+  headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
-  contentPlayOnDemand: {fileID: 173699262}
-  PlayOndemand: {fileID: 173699261}
-  playbuttons: []
-  pausebuttons: []
 --- !u!1 &161805899
 GameObject:
   m_ObjectHideFlags: 0
@@ -6432,38 +6324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mediaPlayer:
-  - {fileID: 69544829}
-  - {fileID: 1084337304}
-  - {fileID: 2009280973}
-  - {fileID: 535474768}
-  - {fileID: 263814968}
-  - {fileID: 564317941}
-  - {fileID: 747145531}
-  - {fileID: 1278971650}
-  - {fileID: 1047664867}
-  - {fileID: 2098070832}
-  - {fileID: 1647336564}
-  - {fileID: 1793264390}
-  - {fileID: 1788163397}
-  - {fileID: 788927744}
-  - {fileID: 982927805}
-  - {fileID: 1658606914}
-  - {fileID: 1560484545}
-  - {fileID: 1308299226}
-  - {fileID: 1678213812}
-  - {fileID: 545520765}
-  - {fileID: 2085455038}
-  - {fileID: 141829184}
-  - {fileID: 2044179189}
-  - {fileID: 637480381}
-  - {fileID: 665480418}
-  - {fileID: 210742206}
-  - {fileID: 487079818}
-  - {fileID: 289563310}
-  - {fileID: 2022334599}
-  - {fileID: 1688121606}
-  parts: {fileID: 9175882705634952352, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -6484,12 +6344,8 @@ MonoBehaviour:
   part2Button: {fileID: 1390682268}
   part3Button: {fileID: 1593523436}
   audioSource: {fileID: 1635405943}
-  headertitle: {fileID: 662336208}
+  headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
-  contentPlayOnDemand: {fileID: 173699262}
-  PlayOndemand: {fileID: 173699261}
-  playbuttons: []
-  pausebuttons: []
 --- !u!4 &243499035
 Transform:
   m_ObjectHideFlags: 0
@@ -14769,38 +14625,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mediaPlayer:
-  - {fileID: 69544829}
-  - {fileID: 1084337304}
-  - {fileID: 2009280973}
-  - {fileID: 535474768}
-  - {fileID: 263814968}
-  - {fileID: 564317941}
-  - {fileID: 747145531}
-  - {fileID: 1278971650}
-  - {fileID: 1047664867}
-  - {fileID: 2098070832}
-  - {fileID: 1647336564}
-  - {fileID: 1793264390}
-  - {fileID: 1788163397}
-  - {fileID: 788927744}
-  - {fileID: 982927805}
-  - {fileID: 1658606914}
-  - {fileID: 1560484545}
-  - {fileID: 1308299226}
-  - {fileID: 1678213812}
-  - {fileID: 545520765}
-  - {fileID: 2085455038}
-  - {fileID: 141829184}
-  - {fileID: 2044179189}
-  - {fileID: 637480381}
-  - {fileID: 665480418}
-  - {fileID: 210742206}
-  - {fileID: 487079818}
-  - {fileID: 289563310}
-  - {fileID: 2022334599}
-  - {fileID: 1688121606}
-  parts: {fileID: 9175882705634952352, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -14821,12 +14645,8 @@ MonoBehaviour:
   part2Button: {fileID: 1390682268}
   part3Button: {fileID: 1593523436}
   audioSource: {fileID: 1635405943}
-  headertitle: {fileID: 662336208}
+  headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
-  contentPlayOnDemand: {fileID: 173699262}
-  PlayOndemand: {fileID: 173699261}
-  playbuttons: []
-  pausebuttons: []
 --- !u!1 &656729668
 GameObject:
   m_ObjectHideFlags: 0
@@ -26888,38 +26708,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mediaPlayer:
-  - {fileID: 69544829}
-  - {fileID: 1084337304}
-  - {fileID: 2009280973}
-  - {fileID: 535474768}
-  - {fileID: 263814968}
-  - {fileID: 564317941}
-  - {fileID: 747145531}
-  - {fileID: 1278971650}
-  - {fileID: 1047664867}
-  - {fileID: 2098070832}
-  - {fileID: 1647336564}
-  - {fileID: 1793264390}
-  - {fileID: 1788163397}
-  - {fileID: 788927744}
-  - {fileID: 982927805}
-  - {fileID: 1658606914}
-  - {fileID: 1560484545}
-  - {fileID: 1308299226}
-  - {fileID: 1678213812}
-  - {fileID: 545520765}
-  - {fileID: 2085455038}
-  - {fileID: 141829184}
-  - {fileID: 2044179189}
-  - {fileID: 637480381}
-  - {fileID: 665480418}
-  - {fileID: 210742206}
-  - {fileID: 487079818}
-  - {fileID: 289563310}
-  - {fileID: 2022334599}
-  - {fileID: 1688121606}
-  parts: {fileID: 9175882705634952352, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -26940,12 +26728,8 @@ MonoBehaviour:
   part2Button: {fileID: 1390682268}
   part3Button: {fileID: 1593523436}
   audioSource: {fileID: 1635405943}
-  headertitle: {fileID: 662336208}
+  headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
-  contentPlayOnDemand: {fileID: 173699262}
-  PlayOndemand: {fileID: 173699261}
-  playbuttons: []
-  pausebuttons: []
 --- !u!1 &1219453817
 GameObject:
   m_ObjectHideFlags: 0
@@ -34895,38 +34679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mediaPlayer:
-  - {fileID: 69544829}
-  - {fileID: 1084337304}
-  - {fileID: 2009280973}
-  - {fileID: 535474768}
-  - {fileID: 263814968}
-  - {fileID: 564317941}
-  - {fileID: 747145531}
-  - {fileID: 1278971650}
-  - {fileID: 1047664867}
-  - {fileID: 2098070832}
-  - {fileID: 1647336564}
-  - {fileID: 1793264390}
-  - {fileID: 1788163397}
-  - {fileID: 788927744}
-  - {fileID: 982927805}
-  - {fileID: 1658606914}
-  - {fileID: 1560484545}
-  - {fileID: 1308299226}
-  - {fileID: 1678213812}
-  - {fileID: 545520765}
-  - {fileID: 2085455038}
-  - {fileID: 141829184}
-  - {fileID: 2044179189}
-  - {fileID: 637480381}
-  - {fileID: 665480418}
-  - {fileID: 210742206}
-  - {fileID: 487079818}
-  - {fileID: 289563310}
-  - {fileID: 2022334599}
-  - {fileID: 1688121606}
-  parts: {fileID: 9175882705634952352, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -34947,12 +34699,8 @@ MonoBehaviour:
   part2Button: {fileID: 1390682268}
   part3Button: {fileID: 1593523436}
   audioSource: {fileID: 1635405943}
-  headertitle: {fileID: 662336208}
+  headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
-  contentPlayOnDemand: {fileID: 173699262}
-  PlayOndemand: {fileID: 173699261}
-  playbuttons: []
-  pausebuttons: []
 --- !u!1 &1591739881
 GameObject:
   m_ObjectHideFlags: 0

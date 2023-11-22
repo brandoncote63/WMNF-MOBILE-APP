@@ -17,7 +17,7 @@ public class DisplayRSSData : MonoBehaviour
     public GameObject dataElementPrefab; // Assign the prefab in the Inspector
     public Transform dataContainer; // Assign the container transform in the Inspector
     public Transform expandedDataUI; // Assign the manually created UI layout through the Inspector
-
+    public Image thumnail;
     private GameObject currentExpandedData;
     private List<GameObject> createdDataElements = new List<GameObject>(); // Keep track of created data elements
 
@@ -30,14 +30,17 @@ public class DisplayRSSData : MonoBehaviour
     public int pageNumber = 1;
 
 
-  
 
 
-    private IEnumerator Start()
+
+    private void Start()
     {
+        Invoke("delay", 3f);
         Debug.Log("Fetching and displaying RSS data...");
-        yield return StartCoroutine(FetchAndDisplayRSSData());
+        
+        
     }
+    
 
     private IEnumerator FetchAndDisplayRSSData()
     {
@@ -65,8 +68,8 @@ public class DisplayRSSData : MonoBehaviour
             //image thumbnail
 
 
-            Image thumbnail = dataElement.transform.Find("Image").GetComponent<Image>();
-            StartCoroutine(LoadSpriteImage("https://wmnf.s3.amazonaws.com/wp-content/uploads/2023/11/CNC06630-150x100.jpg", thumbnail));
+            Image thumimage = dataElement.transform.Find("Image").GetComponent<Image>();
+            StartCoroutine(LoadSpriteImage(item.Image, thumimage));
 
             // Make the title bold using rich text formatting
             titleTMP.text = $"<b>{item.Title}</b>";
@@ -84,16 +87,21 @@ public class DisplayRSSData : MonoBehaviour
 
             Debug.Log($"Displayed RSS item: {item.Title}");
 
-           
 
+            
             // Yield to the next frame before processing the next item
+            
 
         }
         yield return null;
+
+       
+      
         Debug.Log($"Created {createdDataElements.Count} data elements."); // Log the number of data elements created
         
 
     }
+  
 
     private void OnDataButtonClick(RSSItem item)
     {
@@ -181,6 +189,7 @@ public class DisplayRSSData : MonoBehaviour
         public string Link;
         public string Category;
         public string Description;
+        public string Image;
         public DateTime PubDate;
     }
 
@@ -198,6 +207,7 @@ public class DisplayRSSData : MonoBehaviour
 
             if (itemNodes == null)
             {
+
                 Debug.Log("No item nodes found in the RSS feed.");
                 return items;
             }
@@ -210,6 +220,7 @@ public class DisplayRSSData : MonoBehaviour
                 rssItem.Description = itemNode.SelectSingleNode("description")?.InnerText;
                 rssItem.Category = itemNode.SelectSingleNode("category").InnerText;
                 string tag = itemNode.SelectSingleNode("category").InnerText;
+                rssItem.Image = Regex.Match(rssItem.Description, "<img.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
                 Debug.Log("HERE     :  " + tag);
                 // Use a unique identifier like "guid" to differentiate items
                 rssItem.post_id = itemNode.SelectSingleNode("post-id")?.InnerText;
@@ -281,7 +292,8 @@ public class DisplayRSSData : MonoBehaviour
         if (more) { pageNumber++;
             page.text = "Page: " + pageNumber.ToString();
             feedUrl = "http://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
-            StartCoroutine(FetchAndDisplayRSSData()); }
+            StartCoroutine(FetchAndDisplayRSSData());
+        }
 
         else {
 
@@ -289,11 +301,14 @@ public class DisplayRSSData : MonoBehaviour
             { pageNumber = pageNumber - 1;
                 page.text = "Page: " + pageNumber.ToString();
                 feedUrl = "http://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
-                StartCoroutine(FetchAndDisplayRSSData()); }
+                StartCoroutine(FetchAndDisplayRSSData());
+            }
             else { }
            
             
-             }
+        }
+     
+
     }
 
     private IEnumerator LoadSpriteImage(string url, Image image)
@@ -301,9 +316,10 @@ public class DisplayRSSData : MonoBehaviour
         
         if (!string.IsNullOrEmpty(url))
         {
-            Debug.Log("AAAAAAAAAAAAAAAAAAA");
+           
             using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
             {
+                
                 yield return www.SendWebRequest();
                 
                 if (www.result == UnityWebRequest.Result.Success)

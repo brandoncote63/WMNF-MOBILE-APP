@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using TMPro;
 using UnityEngine.Networking;
 using System;
+using System.Web;
 using System.Collections;
 using WMNF_API;
 using HtmlAgilityPack;
@@ -92,7 +93,8 @@ public class ScheduleManager : MonoBehaviour
                     var titleText = prefab.GetComponentInChildren<TextMeshProUGUI>();
                     if (titleText != null)
                     {
-                        titleText.text = program.title;
+                        string decodedString = System.Web.HttpUtility.HtmlDecode(program.title);
+                        titleText.text = decodedString;
                         Debug.Log("Set title text for program: " + program.title);
                     }
                     else
@@ -110,7 +112,9 @@ public class ScheduleManager : MonoBehaviour
                         {
                             formattedContent = formattedContent.Substring(0, maxCharacters) + "...";
                         }
-                        descriptionText.text = formattedContent;
+
+                        string decodedString = System.Web.HttpUtility.HtmlDecode(formattedContent);
+                        descriptionText.text = decodedString;
                         Debug.Log("Set description text for program: " + program.title);
                     }
                     else
@@ -121,11 +125,12 @@ public class ScheduleManager : MonoBehaviour
                     var childImage = prefab.transform.Find("Image")?.GetComponent<Image>();
                     if (childImage != null)
                     {
-                        childImage.sprite = null;
+                        
                         var imageUrl = program.imageThumb; // Use the 'image-thumb' field from the API data
 
                         if (!string.IsNullOrEmpty(imageUrl))
                         {
+                            //childImage.sprite = null;
                             imageUrl = Uri.UnescapeDataString(imageUrl); // Unescape the URL
                             Coroutine coroutine = StartCoroutine(LoadImage(childImage, imageUrl));
                             activeCoroutines.Add(coroutine);
@@ -262,6 +267,8 @@ public class ScheduleManager : MonoBehaviour
 
     private void OnScheduleButtonClick(Program program)
     {
+        back();
+      
         Debug.Log("Schedule button clicked for program: " + program.title);
 
 
@@ -269,24 +276,28 @@ public class ScheduleManager : MonoBehaviour
         {
 
             var iterationCount = program.playlist[0].data.Count;
-            for (int i = 0; i < iterationCount; i++)
+            if (iterationCount > 0)
             {
-                //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
+                for (int i = 0; i < iterationCount; i++)
+                {
+                    //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
 
 
-                mediaPlayer[i].OpenMedia(new MediaPath(program.playlist[0].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
-                Debug.Log("part" + i + "file:" + program.playlist[0].data[i].file);
-                GameObject partpart = Instantiate(parts, contentPlayOnDemand);
-                partpart.SetActive(true);
-                TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
-                Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
-                Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
-                updateBuutons(playbutton, pausebutton, i);
+                    mediaPlayer[i].OpenMedia(new MediaPath(program.playlist[0].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
+                    Debug.Log("part" + i + "file:" + program.playlist[0].data[i].file);
+                    GameObject partpart = Instantiate(parts, contentPlayOnDemand);
+                    partpart.SetActive(true);
+                    TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
+                    Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
+                    Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
+                    updateBuutons(playbutton, pausebutton, i);
 
 
 
-                title.text = program.playlist[0].data[i].title;
+                    title.text = program.playlist[0].data[i].title;
+                }
             }
+            else { contentPlayOnDemand.gameObject.SetActive(false); }
 
 
         }
@@ -294,10 +305,14 @@ public class ScheduleManager : MonoBehaviour
         {
             PlayOndemand.SetActive(false);
         }
+        string decodedString = System.Web.HttpUtility.HtmlDecode(program.title);
+        string decodedStringDES = System.Web.HttpUtility.HtmlDecode(program.content);
+        titleTMP.text = decodedString;
+        headertitle.text = decodedString;
+        descriptionTMP.text = FormatHtmlContent(decodedStringDES);
 
-        titleTMP.text = program.title;
-        headertitle.text = program.title;
-        descriptionTMP.text = FormatHtmlContent(program.content);
+
+
         SetMP3Tracks(program.playlist);
         LayoutRebuilder.ForceRebuildLayoutImmediate(vertlayoutg);
     }
@@ -378,6 +393,20 @@ public class ScheduleManager : MonoBehaviour
         Debug.Log("clip =" + clip);
         mediaPlayer[clip].Stop();
 
+    }
+
+    public void back()
+    {
+        pausebuttons.Clear();
+        playbuttons.Clear();
+
+        foreach (Transform child in contentPlayOnDemand)
+        {
+            if (child.tag == "part")
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
 
     private IEnumerator LoadAudioFromURL(string mp3URL)

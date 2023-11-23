@@ -2115,6 +2115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mediaPlayer: []
+  parts: {fileID: 0}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -2137,6 +2139,10 @@ MonoBehaviour:
   audioSource: {fileID: 1635405943}
   headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
+  contentPlayOnDemand: {fileID: 0}
+  PlayOndemand: {fileID: 0}
+  playbuttons: []
+  pausebuttons: []
 --- !u!1 &76228000
 GameObject:
   m_ObjectHideFlags: 0
@@ -2595,6 +2601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mediaPlayer: []
+  parts: {fileID: 0}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -2617,6 +2625,10 @@ MonoBehaviour:
   audioSource: {fileID: 1635405943}
   headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
+  contentPlayOnDemand: {fileID: 0}
+  PlayOndemand: {fileID: 0}
+  playbuttons: []
+  pausebuttons: []
 --- !u!1 &113324768
 GameObject:
   m_ObjectHideFlags: 0
@@ -4178,6 +4190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mediaPlayer: []
+  parts: {fileID: 0}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -4200,6 +4214,10 @@ MonoBehaviour:
   audioSource: {fileID: 1635405943}
   headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
+  contentPlayOnDemand: {fileID: 0}
+  PlayOndemand: {fileID: 0}
+  playbuttons: []
+  pausebuttons: []
 --- !u!1 &161805899
 GameObject:
   m_ObjectHideFlags: 0
@@ -6324,6 +6342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mediaPlayer: []
+  parts: {fileID: 0}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -6346,6 +6366,10 @@ MonoBehaviour:
   audioSource: {fileID: 1635405943}
   headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
+  contentPlayOnDemand: {fileID: 0}
+  PlayOndemand: {fileID: 0}
+  playbuttons: []
+  pausebuttons: []
 --- !u!4 &243499035
 Transform:
   m_ObjectHideFlags: 0
@@ -14625,6 +14649,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mediaPlayer: []
+  parts: {fileID: 0}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -14647,6 +14673,10 @@ MonoBehaviour:
   audioSource: {fileID: 1635405943}
   headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
+  contentPlayOnDemand: {fileID: 0}
+  PlayOndemand: {fileID: 0}
+  playbuttons: []
+  pausebuttons: []
 --- !u!1 &656729668
 GameObject:
   m_ObjectHideFlags: 0
@@ -26708,6 +26738,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mediaPlayer: []
+  parts: {fileID: 0}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -26730,6 +26762,10 @@ MonoBehaviour:
   audioSource: {fileID: 1635405943}
   headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
+  contentPlayOnDemand: {fileID: 0}
+  PlayOndemand: {fileID: 0}
+  playbuttons: []
+  pausebuttons: []
 --- !u!1 &1219453817
 GameObject:
   m_ObjectHideFlags: 0
@@ -34679,6 +34715,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200dcf2624efb642b6eeb91d732380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mediaPlayer: []
+  parts: {fileID: 0}
   containers:
   - {fileID: 1728773430}
   - {fileID: 2099087289}
@@ -34701,6 +34739,10 @@ MonoBehaviour:
   audioSource: {fileID: 1635405943}
   headertitle: {fileID: 58882393}
   vertlayoutg: {fileID: 444959890}
+  contentPlayOnDemand: {fileID: 0}
+  PlayOndemand: {fileID: 0}
+  playbuttons: []
+  pausebuttons: []
 --- !u!1 &1591739881
 GameObject:
   m_ObjectHideFlags: 0

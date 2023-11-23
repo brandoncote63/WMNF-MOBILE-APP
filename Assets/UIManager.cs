@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public GameObject[] content;
     public Image[] image;
     public Color color;
+    public bool waited;
 
     public void Iconcolor(int i)
     {
@@ -33,128 +34,275 @@ public class UIManager : MonoBehaviour
 
     }
 
-
+    public void delay()
+    {
+        waited = true;
+    }
   
 
     public void ListenPage()
     {
-        foreach (GameObject i in pages) { i.SetActive(false);}
+        if (waited)
+        {
+            waited = false;
+            foreach (GameObject i in pages) { i.SetActive(false); }
+            pages[0].SetActive(true);
+            Iconcolor(0);
+            Invoke("delay", 1);
+        }
+        else
+        {
+            Invoke("ListenPage", 1);
+        }
 
-        pages[0].SetActive(true);
-        Iconcolor(0);
-        foreach (GameObject g in content) { g.SetActive(true); }
+       
+        
     }
     public void Playlist()
+
     {
-        foreach (GameObject i in pages) { if (i == pages[0]) { }
-            else { i.SetActive(false); }
+        
+        if (waited)
+        {
+            waited = false;
+
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+
+            pages[1].SetActive(true);
+            Invoke("delay", 1);
         }
-        foreach (GameObject g in content) { g.SetActive(true); }
-        pages[1].SetActive(true);
+        else
+        {
+            Invoke("Playlist", 1);
+        }
+
+
     }
     public void Upnext()
     {
-        foreach (GameObject i in pages)
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+
+            pages[2].SetActive(true);
+            Invoke("delay", 1);
         }
-        foreach (GameObject g in content) { g.SetActive(true); }
-        pages[2].SetActive(true);
+        else
+        {
+            Invoke("Upnext", 1);
+        }
+
+
+       
     }
     public void Archive()
     {
-        foreach (GameObject i in pages)
+
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+            content[0].SetActive(true);
+            pages[3].SetActive(true);
+            Iconcolor(1);
+            Invoke("delay", 1);
         }
-        foreach (GameObject g in content) { g.SetActive(true); }
-        pages[3].SetActive(true);
-        Iconcolor(1);
+        else
+        {
+            Invoke("Archive", 1);
+        }
+
+
+       
     }
     public void ArchiveSub()
     {
-        foreach (GameObject i in pages)
+
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+            pages[4].SetActive(true);
+
+            Invoke("delay", 1);
         }
-        pages[4].SetActive(true);
-        foreach (GameObject g in content) { g.SetActive(true); }
+        else
+        {
+            Invoke("ArchiveSub", 1);
+        }
+
+
+        
     }
     public void News()
     {
-        foreach (GameObject i in pages)
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+            Iconcolor(2);
+            pages[5].SetActive(true);
+            content[1].SetActive(true);
+            Invoke("delay", 1);
         }
-        Iconcolor(2);
-        pages[5].SetActive(true);
-        foreach (GameObject g in content) { g.SetActive(true); }
+        else
+        {
+            Invoke("News", 1);
+        }
+
+
+     
     }
     public void NewsSub()
     {
-        foreach (GameObject i in pages)
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+            foreach (GameObject g in content) { g.SetActive(true); }
+            pages[6].SetActive(true);
+            Invoke("delay", 1);
         }
-        foreach (GameObject g in content) { g.SetActive(true); }
-        pages[6].SetActive(true);
+        else
+        {
+            Invoke("NewsSub", 1);
+        }
+
+      
     }
     public void Events()
     {
-        foreach (GameObject i in pages)
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+            pages[7].SetActive(true);
+            Iconcolor(3);
+            content[2].SetActive(true);
+            Invoke("delay", 1);
         }
-        pages[7].SetActive(true);
-        Iconcolor(3);
-        foreach (GameObject g in content) { g.SetActive(true); }
+        else
+        {
+            Invoke("Events", 1);
+        }
+
+
+       
     }
     public void EventsSub()
     {
-        foreach (GameObject i in pages)
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+
+            pages[8].SetActive(true);
+            Invoke("delay", 1);
         }
-        foreach (GameObject g in content) { g.SetActive(true); }
-        pages[8].SetActive(true);
+        else
+        {
+            Invoke("EventsSub", 1);
+        }
+
+       
     }
     public void Scedual()
     {
-        foreach (GameObject i in pages)
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+
+            pages[9].SetActive(true);
+            Iconcolor(4);
+            Invoke("delay", 1);
         }
-        foreach (GameObject g in content) { g.SetActive(true); }
-        pages[9].SetActive(true);
-        Iconcolor(4);
+        else
+        {
+            Invoke("Scedual", 1);
+        }
+
+      
     }
     public void ScedualSub()
     {
-        foreach (GameObject i in pages)
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+
+            pages[10].SetActive(true);
+            Invoke("delay", 1);
         }
-        foreach (GameObject g in content) { g.SetActive(true); }
-        pages[10].SetActive(true);
+        else
+        {
+            Invoke("ScedualSub", 1);
+        }
+
+      
     }
     public void Donate()
     {
-        foreach (GameObject i in pages)
+
+        if (waited)
         {
-            if (i == pages[0]) { }
-            else { i.SetActive(false); }
+            waited = false;
+            foreach (GameObject i in pages)
+            {
+                if (i == pages[0]) { }
+                else { i.SetActive(false); }
+            }
+
+            pages[11].SetActive(true);
+            Iconcolor(5);
+            Invoke("delay", 1);
         }
-        foreach (GameObject g in content) { g.SetActive(true); }
-        pages[11].SetActive(true);
-        Iconcolor(5);
+        else
+        {
+            Invoke("Donate", 1);
+        }
+
+       
     }
 }

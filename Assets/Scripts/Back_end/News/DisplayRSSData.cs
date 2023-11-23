@@ -13,7 +13,7 @@ using UnityEngine.Networking;
 
 public class DisplayRSSData : MonoBehaviour
 {
-    public string feedUrl = "http://www.wmnf.org/category/news/feed";
+    public string feedUrl = "https://www.wmnf.org/category/news/feed";
     public GameObject dataElementPrefab; // Assign the prefab in the Inspector
     public Transform dataContainer; // Assign the container transform in the Inspector
     public Transform expandedDataUI; // Assign the manually created UI layout through the Inspector
@@ -35,10 +35,10 @@ public class DisplayRSSData : MonoBehaviour
 
     private void Start()
     {
-        Invoke("delay", 3f);
+        
         Debug.Log("Fetching and displaying RSS data...");
-        
-        
+      
+
     }
     
 
@@ -69,7 +69,12 @@ public class DisplayRSSData : MonoBehaviour
 
 
             Image thumimage = dataElement.transform.Find("Image").GetComponent<Image>();
-            StartCoroutine(LoadSpriteImage(item.Image, thumimage));
+            
+            
+                StartCoroutine(LoadSpriteImage(item.Image, thumimage));
+
+            
+            
 
             // Make the title bold using rich text formatting
             titleTMP.text = $"<b>{item.Title}</b>";
@@ -291,7 +296,7 @@ public class DisplayRSSData : MonoBehaviour
     {
         if (more) { pageNumber++;
             page.text = "Page: " + pageNumber.ToString();
-            feedUrl = "http://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
+            feedUrl = "https://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
             StartCoroutine(FetchAndDisplayRSSData());
         }
 
@@ -300,7 +305,7 @@ public class DisplayRSSData : MonoBehaviour
             if (pageNumber > 1)
             { pageNumber = pageNumber - 1;
                 page.text = "Page: " + pageNumber.ToString();
-                feedUrl = "http://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
+                feedUrl = "https://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
                 StartCoroutine(FetchAndDisplayRSSData());
             }
             else { }

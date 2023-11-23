@@ -6,8 +6,10 @@ using UnityEngine.UI;
 using HtmlAgilityPack;
 using SimpleJSON;
 using System;
+using System.Web;
 using System.Linq;
 using System.Runtime.InteropServices;
+using static ScheduleManager;
 
 public class Calling_Events : MonoBehaviour
 {
@@ -114,10 +116,16 @@ public class Calling_Events : MonoBehaviour
         currentExpandedEvent.SetActive(true);
 
         // Assign date, title, time, venue, link, and description manually
-        titleUIText.text = item.title;
-        timeUIText.text = item.start;
+        string decodedString = System.Web.HttpUtility.HtmlDecode(item.title);
+        titleUIText.text = decodedString;
+
+        System.DateTime dateTime = System.DateTime.Parse(item.start);
+        System.DateTime dateTimeend = System.DateTime.Parse(item.endTime);
+
+        timeUIText.text = dateTime.ToString("ddd hh:mm tt")+" - "+dateTimeend.ToString("ddd hh:mm tt");
+
         venueUIText.text = ""; // Manually assign venue here
-        headertitle.text = item.title;
+        headertitle.text = decodedString;
 
         // Use HtmlAgilityPack to extract the link from the HTML format
         var htmlDoc = new HtmlDocument();

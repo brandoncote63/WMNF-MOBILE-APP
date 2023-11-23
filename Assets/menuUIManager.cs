@@ -9,9 +9,15 @@ public class menuUIManager : MonoBehaviour
 {
     public Image[] image;
     public Color color;
+    public Button[] buttons;
 
     public void page(int i)
     {
+        foreach(Button b in buttons)
+        {
+            b.onClick.Invoke();
+        }
+
         foreach (Image w in image)
         {
             w.color = color;

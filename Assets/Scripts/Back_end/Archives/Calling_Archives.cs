@@ -198,8 +198,8 @@ public class Calling_Archives : MonoBehaviour
     }
     private void OnArchiveButtonClick(ArchiveData archive)
     {
+        back();
         
-
         if (archive.playlist[0].data.Count > 0)
         {
             
@@ -287,6 +287,7 @@ public class Calling_Archives : MonoBehaviour
         endTimeTMP.gameObject.SetActive(true);
         descriptionTMP.gameObject.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup);
+       
 
     }
 

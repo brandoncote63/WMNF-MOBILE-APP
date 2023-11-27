@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+
+
+
 public class UIManager : MonoBehaviour
 {
     public GameObject[] pages;
     public GameObject[] content;
     public Image[] image;
+    public Image[] imageANDROID;
+    public GameObject logoIOS;
+    public GameObject logoANDROID;
     public Color color;
     public bool waited;
 
@@ -23,7 +29,21 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-  
+
+        //#if UNITY_IPHONE
+
+
+        //#endif
+#if UNITY_ANDROID
+
+        for (int i = 0; i < image.Length; i++)
+        {
+            image[i] = imageANDROID[i];
+        }
+        logoIOS.SetActive(false);
+        logoANDROID.SetActive(true);
+#endif
+
         foreach (GameObject i in pages) { i.SetActive(false); }
 
 

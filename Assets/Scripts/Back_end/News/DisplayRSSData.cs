@@ -115,7 +115,10 @@ public class DisplayRSSData : MonoBehaviour
         TextMeshProUGUI dateTMP = expandedDataUI.Find("Date").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI descriptionTMP = expandedDataUI.Find("Description").GetComponent<TextMeshProUGUI>();
         Button readMoreButton = expandedDataUI.Find("ReadMore").GetComponent<Button>();
+        Image pic = expandedDataUI.Find("pic").GetComponent<Image>();
 
+
+        StartCoroutine(LoadSpriteImage(item.Image, pic));
         // Set the Title
         titleTMP.text = $"<b>{item.Title}</b>";
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEditor;
 
 public static class APIManager_Events
 {
@@ -31,6 +32,7 @@ public static class APIManager_Events
         RSSFeed rssFeed = new RSSFeed
         {
             title = rootNode["title"],
+            
             link = rootNode["content"],
             description = rootNode["description"],
             language = rootNode["language"],
@@ -50,6 +52,7 @@ public static class APIManager_Events
             RSSFeedItem item = new RSSFeedItem
             {
                 title = dataItem["title"],
+                venue = dataItem["venue"],
                 link = dataItem["link"],
                 description = dataItem["content"],
                 start = dataItem["start"],

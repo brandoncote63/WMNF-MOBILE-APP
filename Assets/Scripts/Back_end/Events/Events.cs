@@ -6,6 +6,7 @@ public class RSSFeedItem
     public string title;
     public string link;
     public string description;
+    public string venue;
     public string start;
     public string creator;
     public List<string> category;
@@ -17,6 +18,7 @@ public class RSSFeedItem
 [System.Serializable]
 public class RSSFeed
 {
+    
     public string title;
     public string link;
     public string description;

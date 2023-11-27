@@ -10,6 +10,7 @@ using System.Web;
 using System.Linq;
 using System.Runtime.InteropServices;
 using static ScheduleManager;
+using System.Threading;
 
 public class Calling_Events : MonoBehaviour
 {
@@ -23,10 +24,13 @@ public class Calling_Events : MonoBehaviour
     public TextMeshProUGUI titleUIText;
     public TextMeshProUGUI timeUIText;
     public TextMeshProUGUI venueUIText;
+    public GameObject venueparent;
     public TextMeshProUGUI linkUIText;
     public TextMeshProUGUI descriptionUIText;
     public TextMeshProUGUI readMoreUIText;
-    public TextMeshProUGUI dateTMP; // TextMeshProUGUI for date
+    public TextMeshProUGUI dateTMP;
+    public TextMeshProUGUI dateTMPend;// TextMeshProUGUI for date
+    public GameObject cent;
     public TextMeshProUGUI timeTime;
     public GameObject Content; // Assign your UI element in the Inspector
     public TextMeshProUGUI headertitle;
@@ -76,20 +80,36 @@ public class Calling_Events : MonoBehaviour
                     
                     if (System.DateTime.TryParse(item.start, out System.DateTime eventDate))
                     {
-                        string formattedDate = eventDate.ToString("MMM dd");
-                        string formattedTime = eventDate.ToString("t");
+                        TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
+                        
+                        DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eventDate, easternZone);
+                        string formattedDate = easternTime.ToString("MMM dd");
+                        string formattedTime = easternTime.ToString("t");
                         // Update the date TMP within the event prefab
-                        dateTMP = eventElement.transform.Find("Image/Image1/DateTMP").GetComponent<TextMeshProUGUI>();
+                        dateTMP = eventElement.transform.Find("Image/Image1/GameObject/DateTMP").GetComponent<TextMeshProUGUI>();
                         dateTMP.text = formattedDate;
 
                         timeTMP.text = formattedTime; 
                     }
                     if (System.DateTime.TryParse(item.endTime , out System.DateTime eeventDate))
                     {
-                        string formattedTimeE = eeventDate.ToString("t");
-
+                        TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
+                        DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eeventDate, easternZone);
+                        string formattedDate = easternTime.ToString("MMM dd");
+                        string formattedTimeE = easternTime.ToString("t");
+                        dateTMPend.text = formattedDate;
                         timeTMP.text = timeTMP.text + " - " + formattedTimeE;
 
+                    }
+                    if (dateTMP.text == dateTMPend.text)
+                    {
+                        dateTMPend.gameObject.SetActive(false);
+                        cent.SetActive(false);
+                    }
+                    else
+                    {
+                        dateTMPend.gameObject.SetActive(true);
+                        cent.SetActive(true);
                     }
                 }
                 LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup);
@@ -124,7 +144,17 @@ public class Calling_Events : MonoBehaviour
 
         timeUIText.text = dateTime.ToString("ddd hh:mm tt")+" - "+dateTimeend.ToString("ddd hh:mm tt");
 
-        venueUIText.text = ""; // Manually assign venue here
+        if (string.IsNullOrEmpty(item.venue))
+        {
+            venueUIText.gameObject.SetActive(false);
+            venueparent.SetActive(false);
+        }
+        else
+        {
+            venueUIText.text = item.venue;
+            venueparent.SetActive(true);
+        }
+        
         headertitle.text = decodedString;
 
         // Use HtmlAgilityPack to extract the link from the HTML format

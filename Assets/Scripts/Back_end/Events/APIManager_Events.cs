@@ -52,7 +52,9 @@ public static class APIManager_Events
             RSSFeedItem item = new RSSFeedItem
             {
                 title = dataItem["title"],
-                venue = dataItem["venue"],
+                venue = dataItem["venue"]?.ToString(),
+
+          
                 link = dataItem["link"],
                 description = dataItem["content"],
                 start = dataItem["start"],

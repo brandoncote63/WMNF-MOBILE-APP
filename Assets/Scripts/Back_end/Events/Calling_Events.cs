@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using static ScheduleManager;
 using System.Threading;
+using VenueExtractor;
 
 public class Calling_Events : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class Calling_Events : MonoBehaviour
     public TextMeshProUGUI titleUIText;
     public TextMeshProUGUI timeUIText;
     public TextMeshProUGUI venueUIText;
-    public GameObject venueparent;
+    public TextMeshProUGUI venueparent;
     public TextMeshProUGUI linkUIText;
     public TextMeshProUGUI descriptionUIText;
     public TextMeshProUGUI readMoreUIText;
@@ -144,15 +145,16 @@ public class Calling_Events : MonoBehaviour
 
         timeUIText.text = dateTime.ToString("ddd hh:mm tt")+" - "+dateTimeend.ToString("ddd hh:mm tt");
 
-        if (string.IsNullOrEmpty(item.venue))
+        if (item.venue == "null")
         {
-            venueUIText.gameObject.SetActive(false);
-            venueparent.SetActive(false);
+            venueUIText.text = "";
+            venueparent.text = "";
         }
         else
         {
+
             venueUIText.text = item.venue;
-            venueparent.SetActive(true);
+            venueparent.text = "Venue:";
         }
         
         headertitle.text = decodedString;
@@ -197,6 +199,13 @@ public class Calling_Events : MonoBehaviour
 
         // Activate the expanded event container
         currentExpandedEvent.gameObject.SetActive(true);
+        Invoke("rebuild", .7f);
+        
+    }
+
+    public void rebuild()
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup);
     }
 
     private void OpenLink(string url)
@@ -227,6 +236,7 @@ public class Calling_Events : MonoBehaviour
 
     public void SetContentActive()
     {
+        
         // Check if the reference to your UI element is not null
         if (Content != null)
         {

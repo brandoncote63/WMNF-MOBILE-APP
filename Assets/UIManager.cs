@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public GameObject logoANDROID;
     public Color color;
     public bool waited;
+    public float timeDelay;
 
     public void Iconcolor(int i)
     {
@@ -68,11 +69,11 @@ public class UIManager : MonoBehaviour
             foreach (GameObject i in pages) { i.SetActive(false); }
             pages[0].SetActive(true);
             Iconcolor(0);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("ListenPage", 1);
+            Invoke("ListenPage", timeDelay);
         }
 
        
@@ -93,11 +94,11 @@ public class UIManager : MonoBehaviour
             }
 
             pages[1].SetActive(true);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("Playlist", 1);
+            Invoke("Playlist", timeDelay);
         }
 
 
@@ -114,11 +115,11 @@ public class UIManager : MonoBehaviour
             }
 
             pages[2].SetActive(true);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("Upnext", 1);
+            Invoke("Upnext", timeDelay);
         }
 
 
@@ -138,11 +139,11 @@ public class UIManager : MonoBehaviour
             content[0].SetActive(true);
             pages[3].SetActive(true);
             Iconcolor(1);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("Archive", 1);
+            Invoke("Archive", timeDelay);
         }
 
 
@@ -161,11 +162,11 @@ public class UIManager : MonoBehaviour
             }
             pages[4].SetActive(true);
 
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("ArchiveSub", 1);
+            Invoke("ArchiveSub", timeDelay);
         }
 
 
@@ -184,11 +185,11 @@ public class UIManager : MonoBehaviour
             Iconcolor(2);
             pages[5].SetActive(true);
             content[1].SetActive(true);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("News", 1);
+            Invoke("News", timeDelay);
         }
 
 
@@ -206,11 +207,11 @@ public class UIManager : MonoBehaviour
             }
             foreach (GameObject g in content) { g.SetActive(true); }
             pages[6].SetActive(true);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("NewsSub", 1);
+            Invoke("NewsSub", timeDelay);
         }
 
       
@@ -228,11 +229,11 @@ public class UIManager : MonoBehaviour
             pages[7].SetActive(true);
             Iconcolor(3);
             content[2].SetActive(true);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("Events", 1);
+            Invoke("Events", timeDelay);
         }
 
 
@@ -250,11 +251,11 @@ public class UIManager : MonoBehaviour
             }
 
             pages[8].SetActive(true);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("EventsSub", 1);
+            Invoke("EventsSub", timeDelay);
         }
 
        
@@ -272,11 +273,11 @@ public class UIManager : MonoBehaviour
 
             pages[9].SetActive(true);
             Iconcolor(4);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("Scedual", 1);
+            Invoke("Scedual", timeDelay);
         }
 
       
@@ -293,11 +294,11 @@ public class UIManager : MonoBehaviour
             }
 
             pages[10].SetActive(true);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("ScedualSub", 1);
+            Invoke("ScedualSub", timeDelay);
         }
 
       
@@ -316,11 +317,11 @@ public class UIManager : MonoBehaviour
 
             pages[11].SetActive(true);
             Iconcolor(5);
-            Invoke("delay", 1);
+            Invoke("delay", timeDelay);
         }
         else
         {
-            Invoke("Donate", 1);
+            Invoke("Donate", timeDelay);
         }
 
        

@@ -23,6 +23,9 @@ public static class APIManager_Events
         }
 
         string json = www.downloadHandler.text;
+        
+        json = json.Replace("image-thumb", "imagethumb");
+
         Debug.Log("API Response JSON: " + json); // Debugging line
 
         // Parse the JSON string using SimpleJSON
@@ -52,9 +55,10 @@ public static class APIManager_Events
             RSSFeedItem item = new RSSFeedItem
             {
                 title = dataItem["title"],
-                venue = dataItem["venue"]?.ToString(),
+                venue = dataItem["venue"],
+                imagethumb = dataItem["imagethumb"],
+                tickets = dataItem["tickets"],
 
-          
                 link = dataItem["link"],
                 description = dataItem["content"],
                 start = dataItem["start"],

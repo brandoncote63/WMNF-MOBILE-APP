@@ -13,6 +13,8 @@ public class RSSFeedItem
     public string guid;
     public string comments;
     public string endTime;
+    public string imagethumb;
+    public string tickets;
 }
 
 [System.Serializable]

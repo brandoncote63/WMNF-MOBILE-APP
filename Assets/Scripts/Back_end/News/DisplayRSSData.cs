@@ -128,7 +128,7 @@ public class DisplayRSSData : MonoBehaviour
         headertitle.text = item.Title;
 
         // Set the Description
-        descriptionTMP.text = StripHTMLTags(HttpUtility.HtmlDecode(item.Description));
+        descriptionTMP.text = StripHTMLTags(System.Net.WebUtility.HtmlDecode(item.Description));
 
         // Set up the "Read More" button
         readMoreButton.onClick.RemoveAllListeners(); // Clear existing click listeners
@@ -335,7 +335,17 @@ public class DisplayRSSData : MonoBehaviour
                     
                     Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
                     Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-                    image.sprite = sprite;
+
+                    if (image != null)
+                    {
+                        image.sprite = sprite;
+
+                    }
+                    
+                       
+
+                    
+                    
                 }
                 else
                 {

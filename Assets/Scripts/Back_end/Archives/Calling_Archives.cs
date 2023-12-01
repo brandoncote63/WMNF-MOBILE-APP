@@ -112,7 +112,7 @@ public class Calling_Archives : MonoBehaviour
     TextMeshProUGUI showtimesText = archiveElement.transform.Find("ShowtimesObject/Showtimes").GetComponent<TextMeshProUGUI>();
     TextMeshProUGUI hostText = archiveElement.transform.Find("HostObject/Host").GetComponent<TextMeshProUGUI>();
 
-    archiveTitleText.text = $"<b>{HttpUtility.HtmlDecode(archive.title)}</b>";
+    archiveTitleText.text = $"<b>{System.Net.WebUtility.HtmlDecode(archive.title)}</b>";
 
         // SET THUMBNAIL 
         Image thumbnail = archiveElement.transform.Find("Image").GetComponent<Image>();
@@ -133,7 +133,7 @@ public class Calling_Archives : MonoBehaviour
         hostText.text = archive.host[0];
     }
 
-    string descriptionText = HtmlAgilityPackHelper.StripHtml(HttpUtility.HtmlDecode(archive.content));
+    string descriptionText = HtmlAgilityPackHelper.StripHtml(System.Net.WebUtility.HtmlDecode(archive.content));
     descriptionTMP.text = descriptionText;
 
     // Assign a click listener to part1Button
@@ -239,12 +239,12 @@ public class Calling_Archives : MonoBehaviour
         //PartTitels[0].text = archive.playlist[0].data[1].title;
         
 
-        titleTMP.text = $"<b>{HttpUtility.HtmlDecode(archive.title)}</b>";
+        titleTMP.text = $"<b>{System.Net.WebUtility.HtmlDecode(archive.title)}</b>";
 
         string showtimeText = GenerateShowtimeText(archive.schedule);
         showtimesTMP.text = "All times are Eastern Standard Time (EST)";
 
-        headertitle.text = $"<b>{HttpUtility.HtmlDecode(archive.title)}</b>";
+        headertitle.text = $"<b>{System.Net.WebUtility.HtmlDecode(archive.title)}</b>";
 
         dayOfWeekTMP.text = archive.schedule[0].day;
 
@@ -256,7 +256,7 @@ public class Calling_Archives : MonoBehaviour
             char letter = firsttwo[i];
             result = 10 * result + (letter - 48);
         }
-        Debug.Log(result);
+        
         if (result < 12) { startTimeTMP.text = result.ToString() + ":00 AM"; }
         
         else if (result == 12) { startTimeTMP.text = result.ToString() + ":00 PM"; }
@@ -275,7 +275,7 @@ public class Calling_Archives : MonoBehaviour
             endTimeTMP.gameObject.SetActive(false);
         }
 
-        string descriptionText = HtmlAgilityPackHelper.StripHtml(HttpUtility.HtmlDecode(archive.content));
+        string descriptionText = HtmlAgilityPackHelper.StripHtml(System.Net.WebUtility.HtmlDecode(archive.content));
         descriptionTMP.text = descriptionText;
 
         archiveContainer.gameObject.SetActive(false);
@@ -305,7 +305,7 @@ public class Calling_Archives : MonoBehaviour
                 char letter = firsttoo[i];
                 result = 10 * result + (letter - 48);
             }
-            Debug.Log(result);
+            
             string showtimeT;
            
             if (result < 12) {showtimeT = result.ToString() + ":00 AM"; }
@@ -334,7 +334,7 @@ public class Calling_Archives : MonoBehaviour
                 char letter = firsttoo[i];
                 result = 10 * result + (letter - 48);
             }
-            Debug.Log(result);
+            
             string showtimeT;
 
             if (result < 12) { showtimeT = result.ToString() + ":00 AM"; }

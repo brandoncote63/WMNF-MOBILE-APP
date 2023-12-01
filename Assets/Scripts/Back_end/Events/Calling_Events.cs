@@ -7,17 +7,20 @@ using HtmlAgilityPack;
 using SimpleJSON;
 using System;
 using System.Web;
+using System.Net.Http;
+
 using System.Linq;
 using System.Runtime.InteropServices;
 using static ScheduleManager;
 using System.Threading;
-using VenueExtractor;
+
+using UnityEngine.Networking;
 
 public class Calling_Events : MonoBehaviour
 {
     public GameObject eventPrefab;
     public Transform eventContainer;
-    public string feedUrl = "https://www.wmnf.org/api/events.php?ver=20160427";
+    public string feedUrl = "https://www.wmnf.org/api/wmnf-events.php"; 
     public float refreshInterval = 60f;
     public Transform expandedEventContainer; // Assign your expanded event container in the Inspector
 
@@ -35,11 +38,12 @@ public class Calling_Events : MonoBehaviour
     public TextMeshProUGUI timeTime;
     public GameObject Content; // Assign your UI element in the Inspector
     public TextMeshProUGUI headertitle;
-
+    public Image thumbnail;
     private GameObject currentExpandedEvent;
     private List<GameObject> createdEventElements = new List<GameObject>(); // Keep track of created event elements
 
     public RectTransform vlayoutgroup;
+    public RectTransform vlayoutgroup2;
 
     public Button shareButton1; // Button for sharing
     public Button shareButton2; // Button for sharing
@@ -75,15 +79,32 @@ public class Calling_Events : MonoBehaviour
                     TextMeshProUGUI titleTMP = eventElement.transform.Find("Title").GetComponent<TextMeshProUGUI>();
                     TextMeshProUGUI timeTMP = eventElement.transform.Find("Time").GetComponent<TextMeshProUGUI>();
                     
-                    string decodedTitle = System.Web.HttpUtility.HtmlDecode(item.title);
+                    string decodedTitle = System.Net.WebUtility.HtmlDecode(item.title);
                     titleTMP.text = decodedTitle;
 
                     
                     if (System.DateTime.TryParse(item.start, out System.DateTime eventDate))
                     {
-                        TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
-                        
-                        DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eventDate, easternZone);
+                       // TimeZoneInfo easternZone;
+                        DateTime easternTime;
+                        //try
+                        // {
+                        //    easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        //     easternTime = TimeZoneInfo.ConvertTimeFromUtc(eventDate, easternZone);
+                        // }
+                        //  catch (TimeZoneNotFoundException)
+                        // {
+                        //     easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
+                        //     easternTime = TimeZoneInfo.ConvertTimeFromUtc(eventDate, easternZone);
+                        //  }
+                        // finally
+                        // {
+                        //     easternTime = eventDate.AddHours(-5);
+                        // }
+
+                        easternTime = eventDate.AddHours(-5);
+
+
                         string formattedDate = easternTime.ToString("MMM dd");
                         string formattedTime = easternTime.ToString("t");
                         // Update the date TMP within the event prefab
@@ -94,8 +115,17 @@ public class Calling_Events : MonoBehaviour
                     }
                     if (System.DateTime.TryParse(item.endTime , out System.DateTime eeventDate))
                     {
-                        TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
-                        DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eeventDate, easternZone);
+                       // TimeZoneInfo easternZone;
+                       // try
+                       // {
+                        //    easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                       // }
+                       // catch (TimeZoneNotFoundException)
+                       // {
+                       //     easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
+                       // }
+                        
+                        DateTime easternTime = eeventDate.AddHours(-5);
                         string formattedDate = easternTime.ToString("MMM dd");
                         string formattedTimeE = easternTime.ToString("t");
                         dateTMPend.text = formattedDate;
@@ -114,6 +144,7 @@ public class Calling_Events : MonoBehaviour
                     }
                 }
                 LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup2);
             }
             else
             {
@@ -137,7 +168,7 @@ public class Calling_Events : MonoBehaviour
         currentExpandedEvent.SetActive(true);
 
         // Assign date, title, time, venue, link, and description manually
-        string decodedString = System.Web.HttpUtility.HtmlDecode(item.title);
+        string decodedString = System.Net.WebUtility.HtmlDecode(item.title);
         titleUIText.text = decodedString;
 
         System.DateTime dateTime = System.DateTime.Parse(item.start);
@@ -145,26 +176,34 @@ public class Calling_Events : MonoBehaviour
 
         timeUIText.text = dateTime.ToString("ddd hh:mm tt")+" - "+dateTimeend.ToString("ddd hh:mm tt");
 
-        if (item.venue == "null")
+        if (string.IsNullOrEmpty(item.venue))
         {
-            venueUIText.text = "";
-            venueparent.text = "";
+            venueUIText.gameObject.SetActive(false);
+            venueparent.gameObject.SetActive(false);
         }
         else
         {
 
             venueUIText.text = item.venue;
             venueparent.text = "Venue:";
+            venueUIText.gameObject.SetActive(true);
+            venueparent.gameObject.SetActive(true);
         }
         
         headertitle.text = decodedString;
 
-        // Use HtmlAgilityPack to extract the link from the HTML format
-        var htmlDoc = new HtmlDocument();
-        htmlDoc.LoadHtml(item.description);
 
-        var linkNode = htmlDoc.DocumentNode.SelectSingleNode("//a[@href]");
-        string extractedLink = linkNode?.Attributes["href"]?.Value;
+        //image thumb
+        
+        StartCoroutine(LoadSpriteImage(item.imagethumb, thumbnail));
+
+
+        // Use HtmlAgilityPack to extract the link from the HTML format
+       // var htmlDoc = new HtmlDocument();
+       // htmlDoc.LoadHtml(item.description);
+
+       // var linkNode = htmlDoc.DocumentNode.SelectSingleNode("//a[@href]");
+        string extractedLink = item.tickets;
 
         if (!string.IsNullOrEmpty(extractedLink))
         {
@@ -177,7 +216,7 @@ public class Calling_Events : MonoBehaviour
         }
 
         // Use HtmlAgilityPack to remove HTML tags from the description
-        string decodedDescription = System.Web.HttpUtility.HtmlDecode(item.description);
+        string decodedDescription = System.Net.WebUtility.HtmlDecode(item.description);
         string cleanedDescription = RemoveHtmlTags(decodedDescription);
         descriptionUIText.text = cleanedDescription;
 
@@ -206,6 +245,7 @@ public class Calling_Events : MonoBehaviour
     public void rebuild()
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup2);
     }
 
     private void OpenLink(string url)
@@ -236,7 +276,7 @@ public class Calling_Events : MonoBehaviour
 
     public void SetContentActive()
     {
-        
+        rebuild();
         // Check if the reference to your UI element is not null
         if (Content != null)
         {
@@ -284,6 +324,28 @@ public class Calling_Events : MonoBehaviour
     {
         // Implement a platform-specific share dialogue here (e.g., using native plugins).
         Debug.Log("Sharing on this platform is not supported.");
+    }
+
+    private IEnumerator LoadSpriteImage(string url, Image image)
+    {
+        if (!string.IsNullOrEmpty(url))
+        {
+            using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+                    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                    image.sprite = sprite;
+                }
+                else
+                {
+                    Debug.LogError("Error loading image: " + www.error);
+                }
+            }
+        }
     }
 
 }

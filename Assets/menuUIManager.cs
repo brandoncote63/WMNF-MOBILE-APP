@@ -7,12 +7,14 @@ using UnityEngine.UI;
 
 public class menuUIManager : MonoBehaviour
 {
+    public RectTransform scview;
     public Image[] image;
     public Color color;
     public Button[] buttons;
     public GameObject IOS;
     public GameObject ANDR;
     public void Start()
+
     {
 #if UNITY_IPHONE
 
@@ -20,6 +22,7 @@ public class menuUIManager : MonoBehaviour
         ANDR.SetActive(false);
 #endif
 #if UNITY_ANDROID
+        scview.offsetMin = new Vector2(scview.offsetMin.x, 130f);
         IOS.SetActive(false);
         ANDR.SetActive(true);
 #endif

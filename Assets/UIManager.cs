@@ -12,8 +12,8 @@ public class UIManager : MonoBehaviour
     public GameObject[] content;
     public Image[] image;
     public Image[] imageANDROID;
-    public GameObject logoIOS;
-    public GameObject logoANDROID;
+    public ScrollRect scrollRect;
+    
     public Color color;
     public bool waited;
     public float timeDelay;
@@ -31,19 +31,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
 
-        //#if UNITY_IPHONE
 
-
-        //#endif
-#if UNITY_ANDROID
-
-        for (int i = 0; i < image.Length; i++)
-        {
-            image[i] = imageANDROID[i];
-        }
-        logoIOS.SetActive(false);
-        logoANDROID.SetActive(true);
-#endif
 
         foreach (GameObject i in pages) { i.SetActive(false); }
 
@@ -63,6 +51,8 @@ public class UIManager : MonoBehaviour
 
     public void ListenPage()
     {
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = true;
         if (waited)
         {
             waited = false;
@@ -82,7 +72,8 @@ public class UIManager : MonoBehaviour
     public void Playlist()
 
     {
-        
+        scrollRect.verticalNormalizedPosition=1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -105,6 +96,8 @@ public class UIManager : MonoBehaviour
     }
     public void Upnext()
     {
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -127,7 +120,8 @@ public class UIManager : MonoBehaviour
     }
     public void Archive()
     {
-
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -151,7 +145,8 @@ public class UIManager : MonoBehaviour
     }
     public void ArchiveSub()
     {
-
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -174,6 +169,8 @@ public class UIManager : MonoBehaviour
     }
     public void News()
     {
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -197,6 +194,8 @@ public class UIManager : MonoBehaviour
     }
     public void NewsSub()
     {
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -218,6 +217,8 @@ public class UIManager : MonoBehaviour
     }
     public void Events()
     {
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -241,6 +242,8 @@ public class UIManager : MonoBehaviour
     }
     public void EventsSub()
     {
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -262,6 +265,8 @@ public class UIManager : MonoBehaviour
     }
     public void Scedual()
     {
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -284,6 +289,8 @@ public class UIManager : MonoBehaviour
     }
     public void ScedualSub()
     {
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
         if (waited)
         {
             waited = false;
@@ -305,6 +312,8 @@ public class UIManager : MonoBehaviour
     }
     public void Donate()
     {
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.gameObject.GetComponent<ScrollRect>().enabled = false;
 
         if (waited)
         {

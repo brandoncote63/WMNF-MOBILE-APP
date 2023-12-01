@@ -11,6 +11,7 @@ using WMNF_API;
 using HtmlAgilityPack;
 using RenderHeads.Media.AVProVideo;
 
+
 public class ScheduleManager : MonoBehaviour
 {
     
@@ -93,7 +94,7 @@ public class ScheduleManager : MonoBehaviour
                     var titleText = prefab.GetComponentInChildren<TextMeshProUGUI>();
                     if (titleText != null)
                     {
-                        string decodedString = System.Web.HttpUtility.HtmlDecode(program.title);
+                        string decodedString = System.Net.WebUtility.HtmlDecode(program.title);
                         titleText.text = decodedString;
                         Debug.Log("Set title text for program: " + program.title);
                     }
@@ -113,7 +114,7 @@ public class ScheduleManager : MonoBehaviour
                             formattedContent = formattedContent.Substring(0, maxCharacters) + "...";
                         }
 
-                        string decodedString = System.Web.HttpUtility.HtmlDecode(formattedContent);
+                        string decodedString = System.Net.WebUtility.HtmlDecode(formattedContent);
                         descriptionText.text = decodedString;
                         Debug.Log("Set description text for program: " + program.title);
                     }
@@ -238,10 +239,18 @@ public class ScheduleManager : MonoBehaviour
         public string name;
         public List<Track> data;
     }
+    [System.Serializable]
+    public class Schedule
+    {
+        public string day;
+        public string start;
+        public string end;
+    }
 
     [System.Serializable]
     public class Track
     {
+        
         public string file;
         public int length;
         public string title;
@@ -292,7 +301,27 @@ public class ScheduleManager : MonoBehaviour
                     Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
                     updateBuutons(playbutton, pausebutton, i);
 
+                    if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime eeventDate))
+                    {
+                      //  TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                       // DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eeventDate, easternZone);
+                        
+                        string formattedTimeE = eeventDate.ToString("t");
+                        startTimeTMP.text = formattedTimeE;
 
+                    }
+                    if (System.DateTime.TryParse(program.schedule[0].end, out System.DateTime eventDate))
+                    {
+                       // TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        //DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eventDate, easternZone);
+
+                        string formattedTimeE = eventDate.ToString("t");
+                        endTimeTMP.text = formattedTimeE;
+
+                    }
+                    
+                    
+                    dayTMP.text = program.schedule[0].day;
 
                     title.text = program.playlist[0].data[i].title;
                 }
@@ -305,8 +334,8 @@ public class ScheduleManager : MonoBehaviour
         {
             PlayOndemand.SetActive(false);
         }
-        string decodedString = System.Web.HttpUtility.HtmlDecode(program.title);
-        string decodedStringDES = System.Web.HttpUtility.HtmlDecode(program.content);
+        string decodedString = System.Net.WebUtility.HtmlDecode(program.title);
+        string decodedStringDES = System.Net.WebUtility.HtmlDecode(program.content);
         titleTMP.text = decodedString;
         headertitle.text = decodedString;
         descriptionTMP.text = FormatHtmlContent(decodedStringDES);

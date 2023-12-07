@@ -173,6 +173,8 @@ public class Calling_Events : MonoBehaviour
 
         System.DateTime dateTime = System.DateTime.Parse(item.start);
         System.DateTime dateTimeend = System.DateTime.Parse(item.endTime);
+        dateTime = dateTime.AddHours(-5);
+        dateTimeend = dateTimeend.AddHours(-5);
 
         timeUIText.text = dateTime.ToString("ddd hh:mm tt")+" - "+dateTimeend.ToString("ddd hh:mm tt");
 
@@ -238,7 +240,10 @@ public class Calling_Events : MonoBehaviour
 
         // Activate the expanded event container
         currentExpandedEvent.gameObject.SetActive(true);
+
+        rebuild();
         Invoke("rebuild", .7f);
+        
         
     }
 

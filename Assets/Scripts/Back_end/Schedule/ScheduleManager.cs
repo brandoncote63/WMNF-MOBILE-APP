@@ -20,7 +20,7 @@ public class ScheduleManager : MonoBehaviour
     public GameObject[] containers;
     public GameObject dayPrefab;
     public string apiUrl = "https://www.wmnf.org/api/programs.php?ver=20160427";
-    public int maxEventsPerContainer = 100;
+    public int maxEventsPerContainer = 35;
     public TextMeshProUGUI titleTMP;
     public TextMeshProUGUI dayTMP;
     public TextMeshProUGUI startTimeTMP;
@@ -36,7 +36,7 @@ public class ScheduleManager : MonoBehaviour
     public GameObject PlayOndemand;
     private List<UnityWebRequest> activeRequests = new List<UnityWebRequest>();
     private List<Coroutine> activeCoroutines = new List<Coroutine>();
-
+    public List<GameObject> elements;
     
     public List<Button> playbuttons;
     public List<Button> pausebuttons;
@@ -72,6 +72,11 @@ public class ScheduleManager : MonoBehaviour
         json = json.Replace("image-thumb", "imageThumb");
         var scheduleResponse = JsonConvert.DeserializeObject<ScheduleResponse>(json);
 
+
+       
+
+
+
         if (scheduleResponse != null && scheduleResponse.data != null)
         {
             foreach (var program in scheduleResponse.data)
@@ -91,11 +96,21 @@ public class ScheduleManager : MonoBehaviour
 
                     var prefab = Instantiate(dayPrefab, container.transform);
 
+                    elements.Add(prefab);
+                   
                     var titleText = prefab.GetComponentInChildren<TextMeshProUGUI>();
                     if (titleText != null)
                     {
+                        string timestart;
                         string decodedString = System.Net.WebUtility.HtmlDecode(program.title);
-                        titleText.text = decodedString;
+                        if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime st))
+                        {
+                            timestart = st.ToString("t");
+                            titleText.text = timestart + " - " + decodedString;
+
+                        }
+                             
+                        
                         Debug.Log("Set title text for program: " + program.title);
                     }
                     else
@@ -152,7 +167,18 @@ public class ScheduleManager : MonoBehaviour
                     Button programButton = prefab.GetComponentInChildren<Button>();
                     programButton.onClick.AddListener(() => OnScheduleButtonClick(program));
 
+
+
+
+
+
                     prefab.SetActive(true);
+
+                    for (int i = 0; i < elements.Count; i++)
+                    {
+                        elements[i].transform.SetSiblingIndex(i);
+                    }
+
                 }
                 else
                 {

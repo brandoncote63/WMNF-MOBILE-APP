@@ -79,9 +79,38 @@ public class ScheduleManager : MonoBehaviour
 
         if (scheduleResponse != null && scheduleResponse.data != null)
         {
+            // Group events by day and sort them by start time
+            Dictionary<string, List<Program>> groupedEvents = new Dictionary<string, List<Program>>();
             foreach (var program in scheduleResponse.data)
             {
                 var dayAsString = program.schedule[0].day;
+
+                if (!groupedEvents.ContainsKey(dayAsString))
+                {
+                    groupedEvents[dayAsString] = new List<Program>();
+                }
+
+                groupedEvents[dayAsString].Add(program);
+
+            }
+
+            // Sort events for each day by start time
+            foreach (var dayEvents in groupedEvents)
+            {
+                dayEvents.Value.Sort((x, y) =>
+                {
+                    if (TimeSpan.TryParse(x.schedule[0].start, out TimeSpan startTimeX) && TimeSpan.TryParse(y.schedule[0].start, out TimeSpan startTimeY))
+                    {
+                        return startTimeX.CompareTo(startTimeY);
+                    }
+                    return 0;
+                });
+            }
+
+            // Display the sorted events
+            foreach (var dayEvents in groupedEvents)
+            {
+                var dayAsString = dayEvents.Key;
 
                 if (dayToIndex.ContainsKey(dayAsString))
                 {
@@ -90,103 +119,66 @@ public class ScheduleManager : MonoBehaviour
 
                     if (container.transform.childCount >= maxEventsPerContainer)
                     {
-                        Debug.Log($"Container for {dayAsString} is full. Skipping event: {program.title}");
+                        Debug.Log($"Container for {dayAsString} is full. Skipping events.");
                         continue;
                     }
 
-                    var prefab = Instantiate(dayPrefab, container.transform);
-
-                    elements.Add(prefab);
-                   
-                    var titleText = prefab.GetComponentInChildren<TextMeshProUGUI>();
-                    if (titleText != null)
+                    foreach (var program in dayEvents.Value)
                     {
-                        string timestart;
-                        string decodedString = System.Net.WebUtility.HtmlDecode(program.title);
-                        if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime st))
-                        {
-                            timestart = st.ToString("t");
-                            titleText.text = timestart + " - " + decodedString;
+                        var prefab = Instantiate(dayPrefab, container.transform);
 
+                        var titleText = prefab.GetComponentInChildren<TextMeshProUGUI>();
+                        if (titleText != null)
+                        {
+                            string timestart;
+                            string decodedString = System.Net.WebUtility.HtmlDecode(program.title);
+                            if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime st))
+                            {
+                                timestart = st.ToString("t");
+                                titleText.text = timestart + " - " + decodedString;
+
+                            }
+                            Debug.Log("Set title text for program: " + program.title);
                         }
-                             
-                        
-                        Debug.Log("Set title text for program: " + program.title);
-                    }
-                    else
-                    {
-                        Debug.LogError("Title TextMeshProUGUI component not found on prefab for program: " + program.title);
-                    }
-
-                    var descriptionText = prefab.transform.Find("Description")?.GetComponent<TextMeshProUGUI>();
-                    if (descriptionText != null)
-                    {
-                        var formattedContent = FormatHtmlContent(program.content);
-                        formattedContent = RemoveImagesFromHtml(formattedContent);
-                        int maxCharacters = 200;
-                        if (formattedContent.Length > maxCharacters)
+                        var childImage = prefab.transform.Find("Image")?.GetComponent<Image>();
+                        if (childImage != null)
                         {
-                            formattedContent = formattedContent.Substring(0, maxCharacters) + "...";
-                        }
 
-                        string decodedString = System.Net.WebUtility.HtmlDecode(formattedContent);
-                        descriptionText.text = decodedString;
-                        Debug.Log("Set description text for program: " + program.title);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Description TextMeshProUGUI component not found on prefab for program: " + program.title);
-                    }
+                            var imageUrl = program.imageThumb; // Use the 'image-thumb' field from the API data
 
-                    var childImage = prefab.transform.Find("Image")?.GetComponent<Image>();
-                    if (childImage != null)
-                    {
-                        
-                        var imageUrl = program.imageThumb; // Use the 'image-thumb' field from the API data
+                            if (!string.IsNullOrEmpty(imageUrl))
+                            {
+                                //childImage.sprite = null;
+                                imageUrl = Uri.UnescapeDataString(imageUrl); // Unescape the URL
+                                Coroutine coroutine = StartCoroutine(LoadImage(childImage, imageUrl));
+                                activeCoroutines.Add(coroutine);
+                            }
+                            else
+                            {
+                                Debug.LogWarning("Image URL not found in API data for program: " + program.title);
+                            }
 
-                        if (!string.IsNullOrEmpty(imageUrl))
-                        {
-                            //childImage.sprite = null;
-                            imageUrl = Uri.UnescapeDataString(imageUrl); // Unescape the URL
-                            Coroutine coroutine = StartCoroutine(LoadImage(childImage, imageUrl));
-                            activeCoroutines.Add(coroutine);
                         }
                         else
                         {
-                            Debug.LogWarning("Image URL not found in API data for program: " + program.title);
+                            Debug.LogWarning("Child Image component not found on prefab for program: " + program.title);
                         }
 
+                        SetShowtimeTMPFields(program.schedule[0]);
+
+                        Button programButton = prefab.GetComponentInChildren<Button>();
+                        programButton.onClick.AddListener(() => OnScheduleButtonClick(program));
+
+                        prefab.SetActive(true);
                     }
-                    else
-                    {
-                        Debug.LogWarning("Child Image component not found on prefab for program: " + program.title);
-                    }
-
-                    SetShowtimeTMPFields(program.schedule[0]);
-
-                    Button programButton = prefab.GetComponentInChildren<Button>();
-                    programButton.onClick.AddListener(() => OnScheduleButtonClick(program));
-
-
-
-
-
-
-                    prefab.SetActive(true);
-
-                    for (int i = 0; i < elements.Count; i++)
-                    {
-                        elements[i].transform.SetSiblingIndex(i);
-                    }
-
                 }
                 else
                 {
-                    Debug.LogError($"Unknown day of the week: {dayAsString} for program: " + program.title);
+                    Debug.LogError($"Unknown day of the week: {dayAsString}. Skipping events.");
                 }
-
-                
             }
+
+
         }
     }
 

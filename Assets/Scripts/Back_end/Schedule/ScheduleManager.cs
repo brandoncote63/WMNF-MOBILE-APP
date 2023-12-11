@@ -19,7 +19,7 @@ public class ScheduleManager : MonoBehaviour
     public GameObject parts;
     public GameObject[] containers;
     public GameObject dayPrefab;
-    public string apiUrl = "https://www.wmnf.org/api/programs.php?ver=20160427";
+    public string apiUrl = "https://www.wmnf.org/api/programs.php";
     public int maxEventsPerContainer = 35;
     public TextMeshProUGUI titleTMP;
     public TextMeshProUGUI dayTMP;
@@ -69,7 +69,9 @@ public class ScheduleManager : MonoBehaviour
         }
 
         string json = www.downloadHandler.text;
+
         json = json.Replace("image-thumb", "imageThumb");
+        
         var scheduleResponse = JsonConvert.DeserializeObject<ScheduleResponse>(json);
 
 
@@ -126,6 +128,10 @@ public class ScheduleManager : MonoBehaviour
                     foreach (var program in dayEvents.Value)
                     {
                         var prefab = Instantiate(dayPrefab, container.transform);
+                        var description = prefab.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                        string decodedStringDES = System.Net.WebUtility.HtmlDecode(program.content);
+                       
+                        description.text = FormatHtmlContent(decodedStringDES);
 
                         var titleText = prefab.GetComponentInChildren<TextMeshProUGUI>();
                         if (titleText != null)
@@ -185,8 +191,12 @@ public class ScheduleManager : MonoBehaviour
     private string FormatHtmlContent(string htmlContent)
     {
         var doc = new HtmlDocument();
+        
         doc.LoadHtml(htmlContent);
         var innerText = doc.DocumentNode.InnerText;
+        if (innerText.StartsWith("\r\n\r\n")) { innerText = innerText.Remove(0, 8); }
+        if (innerText.StartsWith("\n\n")) { innerText = innerText.Remove(0, 4); }
+        if (innerText.StartsWith("\n")) { innerText = innerText.Remove(0, 2); }
         return innerText;
     }
 

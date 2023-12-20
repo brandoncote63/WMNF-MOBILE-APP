@@ -271,12 +271,21 @@ public class DisplayRSSData : MonoBehaviour
     private void Share(string link, string title)
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
-            ShareOnAndroid(title, link);
+            
+             new NativeShare()
+        .SetSubject("WMNF News").SetText(title).SetUrl(link)
+        .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
+        .Share();
+
+
 #elif UNITY_IOS && !UNITY_EDITOR
             ShareOniOS(title, link);
 #else
         // For other platforms (Windows, macOS, etc.), display a simple share prompt.
         ShowSharePopup(title + " " + link);
+
+        
+
 #endif
     }
 

@@ -1,0 +1,25 @@
+Apple Developer Account
+Owned by Robert Fitzpatrick
+web@wmnf.org
+
+
+Google Play Developer Account
+Owned by Dzuy Nguyen
+dzuy@bigseadesign.com
+
+
+Google Play App Signing
+
+wmnf.keystore
+
+bundle id
+wmnf.org.wmnf.wmnf
+
+keystore password
+WMNF2022
+
+key password
+WMNF2022
+
+alias
+alias_name

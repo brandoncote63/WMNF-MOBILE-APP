@@ -138,13 +138,15 @@ public class ScheduleManager : MonoBehaviour
                         {
                             string timestart;
                             string decodedString = System.Net.WebUtility.HtmlDecode(program.title);
+                            
+                            decodedString = decodedString.Replace("’", "'");
                             if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime st))
                             {
                                 timestart = st.ToString("t");
                                 titleText.text = timestart + " - " + decodedString;
 
                             }
-                            Debug.Log("Set title text for program: " + program.title);
+                            
                         }
                         var childImage = prefab.transform.Find("Image")?.GetComponent<Image>();
                         if (childImage != null)
@@ -305,62 +307,66 @@ public class ScheduleManager : MonoBehaviour
     private void OnScheduleButtonClick(Program program)
     {
         back();
-      
-        Debug.Log("Schedule button clicked for program: " + program.title);
 
-
-        if (program.playlist[0].data.Count > 0)
+        var interations = program.playlist.Count;
+        for (int ii = 0; ii < interations; ii++)
         {
 
-            var iterationCount = program.playlist[0].data.Count;
-            if (iterationCount > 0)
+
+            if (program.playlist[ii].data.Count > 0)
             {
-                for (int i = 0; i < iterationCount; i++)
+                string text = program.playlist[ii].name;
+
+                var iterationCount = program.playlist[ii].data.Count;
+                if (iterationCount > 0)
                 {
-                    //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
-
-
-                    mediaPlayer[i].OpenMedia(new MediaPath(program.playlist[0].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
-                    Debug.Log("part" + i + "file:" + program.playlist[0].data[i].file);
-                    GameObject partpart = Instantiate(parts, contentPlayOnDemand);
-                    partpart.SetActive(true);
-                    TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
-                    Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
-                    Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
-                    updateBuutons(playbutton, pausebutton, i);
-
-                    if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime eeventDate))
+                    for (int i = 0; i < iterationCount; i++)
                     {
-                      //  TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                       // DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eeventDate, easternZone);
-                        
-                        string formattedTimeE = eeventDate.ToString("t");
-                        startTimeTMP.text = formattedTimeE;
+                        //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
 
+
+                        mediaPlayer[i].OpenMedia(new MediaPath(program.playlist[ii].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
+                        Debug.Log("part" + i + "file:" + program.playlist[ii].data[i].file);
+                        GameObject partpart = Instantiate(parts, contentPlayOnDemand);
+                        partpart.SetActive(true);
+                        TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
+                        Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
+                        Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
+                        updateBuutons(playbutton, pausebutton, i);
+
+                        if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime eeventDate))
+                        {
+                            //  TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            // DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eeventDate, easternZone);
+
+                            string formattedTimeE = eeventDate.ToString("t");
+                            startTimeTMP.text = formattedTimeE;
+
+                        }
+                        if (System.DateTime.TryParse(program.schedule[0].end, out System.DateTime eventDate))
+                        {
+                            // TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            //DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eventDate, easternZone);
+
+                            string formattedTimeE = eventDate.ToString("t");
+                            endTimeTMP.text = formattedTimeE;
+
+                        }
+
+
+                        dayTMP.text = program.schedule[0].day;
+
+                        title.text = text + " - " + program.playlist[ii].data[i].title;
                     }
-                    if (System.DateTime.TryParse(program.schedule[0].end, out System.DateTime eventDate))
-                    {
-                       // TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                        //DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eventDate, easternZone);
-
-                        string formattedTimeE = eventDate.ToString("t");
-                        endTimeTMP.text = formattedTimeE;
-
-                    }
-                    
-                    
-                    dayTMP.text = program.schedule[0].day;
-
-                    title.text = program.playlist[0].data[i].title;
                 }
+                else { contentPlayOnDemand.gameObject.SetActive(false); }
+
+
             }
-            else { contentPlayOnDemand.gameObject.SetActive(false); }
-
-
-        }
-        else
-        {
-            PlayOndemand.SetActive(false);
+            else
+            {
+                PlayOndemand.SetActive(false);
+            }
         }
         string decodedString = System.Net.WebUtility.HtmlDecode(program.title);
         string decodedStringDES = System.Net.WebUtility.HtmlDecode(program.content);

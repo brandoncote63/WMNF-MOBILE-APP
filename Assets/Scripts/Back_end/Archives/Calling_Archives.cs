@@ -221,14 +221,15 @@ public class Calling_Archives : MonoBehaviour
                     //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
 
 
-                    mediaPlayer[i].OpenMedia(new MediaPath(archive.playlist[ii].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
+                    mediaPlayer[ii+i].OpenMedia(new MediaPath(archive.playlist[ii].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
 
                     GameObject partpart = Instantiate(parts, contentPlayOnDemand);
                     partpart.SetActive(true);
                     TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
                     Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
                     Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
-                    updateBuutons(playbutton, pausebutton, i);
+                    int iii = i + ii;
+                    updateBuutons(playbutton, pausebutton, iii);
 
 
 

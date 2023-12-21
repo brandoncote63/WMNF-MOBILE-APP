@@ -325,15 +325,15 @@ public class ScheduleManager : MonoBehaviour
                         //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
 
 
-                        mediaPlayer[i].OpenMedia(new MediaPath(program.playlist[ii].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
-                        Debug.Log("part" + i + "file:" + program.playlist[ii].data[i].file);
+                        mediaPlayer[i+ii].OpenMedia(new MediaPath(program.playlist[ii].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
+                        //Debug.Log("part" + i + "file:" + program.playlist[ii].data[i].file);
                         GameObject partpart = Instantiate(parts, contentPlayOnDemand);
                         partpart.SetActive(true);
                         TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
                         Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
                         Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
-                        updateBuutons(playbutton, pausebutton, i);
-
+                        updateBuutons(playbutton, pausebutton, (i+ii));
+                       
                         if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime eeventDate))
                         {
                             //  TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");

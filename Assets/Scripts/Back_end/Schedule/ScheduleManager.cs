@@ -10,11 +10,12 @@ using System.Collections;
 using WMNF_API;
 using HtmlAgilityPack;
 using RenderHeads.Media.AVProVideo;
+using Unity.VisualScripting;
 
 
 public class ScheduleManager : MonoBehaviour
 {
-    
+
     public MediaPlayer[] mediaPlayer;
     public GameObject parts;
     public GameObject[] containers;
@@ -37,10 +38,12 @@ public class ScheduleManager : MonoBehaviour
     private List<UnityWebRequest> activeRequests = new List<UnityWebRequest>();
     private List<Coroutine> activeCoroutines = new List<Coroutine>();
     public List<GameObject> elements;
-    
+    public GameObject mask;
     public List<Button> playbuttons;
     public List<Button> pausebuttons;
 
+    public int nowplayingclip;
+    public Slider Sliderr;
     private void OnApplicationQuit()
     {
         foreach (var coroutine in activeCoroutines)
@@ -71,11 +74,11 @@ public class ScheduleManager : MonoBehaviour
         string json = www.downloadHandler.text;
 
         json = json.Replace("image-thumb", "imageThumb");
-        
+
         var scheduleResponse = JsonConvert.DeserializeObject<ScheduleResponse>(json);
 
 
-       
+
 
 
 
@@ -130,7 +133,7 @@ public class ScheduleManager : MonoBehaviour
                         var prefab = Instantiate(dayPrefab, container.transform);
                         var description = prefab.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
                         string decodedStringDES = System.Net.WebUtility.HtmlDecode(program.content);
-                       
+
                         description.text = FormatHtmlContent(decodedStringDES);
 
                         var titleText = prefab.GetComponentInChildren<TextMeshProUGUI>();
@@ -138,7 +141,7 @@ public class ScheduleManager : MonoBehaviour
                         {
                             string timestart;
                             string decodedString = System.Net.WebUtility.HtmlDecode(program.title);
-                            
+
                             decodedString = decodedString.Replace("’", "'");
                             if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime st))
                             {
@@ -146,7 +149,7 @@ public class ScheduleManager : MonoBehaviour
                                 titleText.text = timestart + " - " + decodedString;
 
                             }
-                            
+
                         }
                         var childImage = prefab.transform.Find("Image")?.GetComponent<Image>();
                         if (childImage != null)
@@ -193,7 +196,7 @@ public class ScheduleManager : MonoBehaviour
     private string FormatHtmlContent(string htmlContent)
     {
         var doc = new HtmlDocument();
-        
+
         doc.LoadHtml(htmlContent);
         var innerText = doc.DocumentNode.InnerText;
         if (innerText.StartsWith("\r\n\r\n")) { innerText = innerText.Remove(0, 8); }
@@ -220,28 +223,28 @@ public class ScheduleManager : MonoBehaviour
 
     private IEnumerator LoadImage(Image image, string imageUrl)
     {
-       
+
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageUrl);
-        
+
         yield return www.SendWebRequest();
 
-        
+
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.LogError("Error loading image: " + www.error);
             yield break;
         }
-        
+
 
         Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-        
+
         if (texture != null)
         {
-           
+
 
             image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             image.rectTransform.sizeDelta = new Vector2(117, 113);
-            
+
         }
     }
 
@@ -280,7 +283,7 @@ public class ScheduleManager : MonoBehaviour
     [System.Serializable]
     public class Track
     {
-        
+
         public string file;
         public int length;
         public string title;
@@ -307,132 +310,111 @@ public class ScheduleManager : MonoBehaviour
     private void OnScheduleButtonClick(Program program)
     {
         back();
-
-        var interations = program.playlist.Count;
-        for (int ii = 0; ii < interations; ii++)
+        if (program.playlist != null)
         {
+            var interations = program.playlist.Count;
 
-
-            if (program.playlist[ii].data.Count > 0)
+            for (int ii = 0; ii < interations; ii++)
             {
-                string text = program.playlist[ii].name;
 
-                var iterationCount = program.playlist[ii].data.Count;
-                if (iterationCount > 0)
+
+                if (program.playlist[ii].data.Count > 0)
                 {
-                    for (int i = 0; i < iterationCount; i++)
+                    string text = program.playlist[ii].name;
+
+                    var iterationCount = program.playlist[ii].data.Count;
+                    if (iterationCount > 0)
                     {
-                        //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
-
-
-                        mediaPlayer[i+ii].OpenMedia(new MediaPath(program.playlist[ii].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
-                        //Debug.Log("part" + i + "file:" + program.playlist[ii].data[i].file);
-                        GameObject partpart = Instantiate(parts, contentPlayOnDemand);
-                        partpart.SetActive(true);
-                        TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
-                        Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
-                        Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
-                        updateBuutons(playbutton, pausebutton, (i+ii));
-                       
-                        if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime eeventDate))
+                        for (int i = 0; i < iterationCount; i++)
                         {
-                            //  TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                            // DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eeventDate, easternZone);
+                            //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
 
-                            string formattedTimeE = eeventDate.ToString("t");
-                            startTimeTMP.text = formattedTimeE;
+                            if (i + ii <= mediaPlayer.Length - 1)
+                            {
+                                mediaPlayer[i + ii].OpenMedia(new MediaPath(program.playlist[ii].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
+                                //Debug.Log("part" + i + "file:" + program.playlist[ii].data[i].file);
+                                GameObject partpart = Instantiate(parts, contentPlayOnDemand);
+                                partpart.SetActive(true);
 
+                                TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
+                                Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
+                                Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
+                                Slider slider = partpart.transform.Find("Slider").GetComponent<Slider>();
+                                updateBuutons(playbutton, pausebutton, slider, (i + ii));
+
+                                if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime eeventDate))
+                                {
+                                    //  TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    // DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eeventDate, easternZone);
+
+                                    string formattedTimeE = eeventDate.ToString("t");
+                                    startTimeTMP.text = formattedTimeE;
+
+                                }
+                                if (System.DateTime.TryParse(program.schedule[0].end, out System.DateTime eventDate))
+                                {
+                                    // TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    //DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eventDate, easternZone);
+
+                                    string formattedTimeE = eventDate.ToString("t");
+                                    endTimeTMP.text = formattedTimeE;
+
+                                }
+
+
+                               
+
+                                title.text = text + " - " + program.playlist[ii].data[i].title;
+                            }
                         }
-                        if (System.DateTime.TryParse(program.schedule[0].end, out System.DateTime eventDate))
-                        {
-                            // TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                            //DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(eventDate, easternZone);
-
-                            string formattedTimeE = eventDate.ToString("t");
-                            endTimeTMP.text = formattedTimeE;
-
-                        }
-
-
-                        dayTMP.text = program.schedule[0].day;
-
-                        title.text = text + " - " + program.playlist[ii].data[i].title;
                     }
+                    else { contentPlayOnDemand.gameObject.SetActive(false); }
+
+
                 }
-                else { contentPlayOnDemand.gameObject.SetActive(false); }
+                else
+                {
+                    PlayOndemand.SetActive(false);
+                }
+            }
+           
 
 
-            }
-            else
-            {
-                PlayOndemand.SetActive(false);
-            }
+
+            
+            
         }
         string decodedString = System.Net.WebUtility.HtmlDecode(program.title);
         string decodedStringDES = System.Net.WebUtility.HtmlDecode(program.content);
         titleTMP.text = decodedString;
         headertitle.text = decodedString;
         descriptionTMP.text = FormatHtmlContent(decodedStringDES);
-
-
-
-        SetMP3Tracks(program.playlist);
+        dayTMP.text = program.schedule[0].day;
         LayoutRebuilder.ForceRebuildLayoutImmediate(vertlayoutg);
+        mask.GetComponent<dropdownsize>().rreset();
     }
 
-    private void SetMP3Tracks(List<Playlist> playlists)
-    {
-        part1Button.onClick.RemoveAllListeners();
-        part2Button.onClick.RemoveAllListeners();
-        part3Button.onClick.RemoveAllListeners();
+   
 
-        foreach (var playlist in playlists)
-        {
-            foreach (var track in playlist.data)
-            {
-                if (string.Equals(track.title, "Part 1", StringComparison.OrdinalIgnoreCase))
-                {
-                    Debug.Log("Setting Part 1 button click listener for program: " + track.title);
-                    part1Button.onClick.AddListener(() => PlayMP3(track.file));
-                }
-                else if (string.Equals(track.title, "Part 2", StringComparison.OrdinalIgnoreCase))
-                {
-                    Debug.Log("Setting Part 2 button click listener for program: " + track.title);
-                    part2Button.onClick.AddListener(() => PlayMP3(track.file));
-                }
-                else if (string.Equals(track.title, "Part 3", StringComparison.OrdinalIgnoreCase))
-                {
-                    Debug.Log("Setting Part 3 button click listener for program: " + track.title);
-                    part3Button.onClick.AddListener(() => PlayMP3(track.file));
-                }
-            }
-        }
-    }
+    
 
-    private void PlayMP3(string mp3URL)
-    {
-        if (!string.IsNullOrEmpty(mp3URL) && audioSource != null)
-        {
-            Debug.Log(mp3URL.ToString());
-            StartCoroutine(LoadAudioFromURL(mp3URL));
-        }
-    }
-
-    public void updateBuutons(Button playthisbutton, Button pasuebutton, int which)
+    public void updateBuutons(Button playthisbutton, Button pasuebutton, Slider slider, int which)
     {
         Debug.Log("THE BUTTON: " + playthisbutton.name + "which: " + which);
-
+        slider.onValueChanged.RemoveAllListeners();
+        slider.onValueChanged.AddListener(delegate { ValueChangeCheck(slider); });
+        Sliderr = slider;
         playthisbutton.onClick.RemoveAllListeners();
-        playthisbutton.onClick.AddListener(() => audiofuntionstart(which));
+        playthisbutton.onClick.AddListener(() => audiofuntionstart(which, slider));
         pasuebutton.onClick.RemoveAllListeners();
         pasuebutton.onClick.AddListener(() => audiofuntionstop(which));
         pausebuttons.Add(pasuebutton);
         playbuttons.Add(playthisbutton);
 
     }
-    public void audiofuntionstart(int clip)
+    public void audiofuntionstart(int clip, Slider slider)
     {
-
+        InvokeRepeating("updateslider", 1, 1);
         foreach (MediaPlayer m in mediaPlayer)
         {
             m.Stop();
@@ -448,6 +430,11 @@ public class ScheduleManager : MonoBehaviour
 
         Debug.Log("clip =" + clip);
         mediaPlayer[clip].Play();
+        TimeRanges seekRanges = mediaPlayer[clip].Control.GetSeekableTimes();
+
+        slider.maxValue = (float)seekRanges.MaxTime;
+        nowplayingclip = clip;
+
         //audioSource.clip = audioClips[clip];
         //audioSource.Play();
     }
@@ -455,6 +442,23 @@ public class ScheduleManager : MonoBehaviour
     {
         Debug.Log("clip =" + clip);
         mediaPlayer[clip].Stop();
+
+    }
+
+    public void ValueChangeCheck(Slider slider)
+    {
+       
+        mediaPlayer[nowplayingclip].Control.SeekFast(slider.value);
+       
+    }
+    public void updateslider()
+    {
+        Sliderr.onValueChanged.RemoveAllListeners();
+
+        Sliderr.value = (float)mediaPlayer[nowplayingclip].Control.GetCurrentTime();
+
+        Sliderr.onValueChanged.AddListener(delegate { ValueChangeCheck(Sliderr); });
+
 
     }
 
@@ -472,30 +476,5 @@ public class ScheduleManager : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadAudioFromURL(string mp3URL)
-    {
-        using (var www = UnityWebRequestMultimedia.GetAudioClip(mp3URL, AudioType.MPEG))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("Error loading audio: " + www.error);
-            }
-            else
-            {
-                AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
-
-                if (audioClip != null)
-                {
-                    audioSource.clip = audioClip;
-                    audioSource.Play();
-                }
-                else
-                {
-                    Debug.LogError("Error loading audio clip from URL: " + mp3URL);
-                }
-            }
-        }
-    }
+   
 }

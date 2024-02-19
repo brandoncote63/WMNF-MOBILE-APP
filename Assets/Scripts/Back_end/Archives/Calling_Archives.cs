@@ -10,6 +10,7 @@ using HtmlAgilityPack;
 using WMNF_API;
 
 using RenderHeads.Media.AVProVideo;
+//using UnityEngine.UIElements;
 
 public class Calling_Archives : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class Calling_Archives : MonoBehaviour
     public TextMeshProUGUI descriptionTMP;
     public TextMeshProUGUI headertitle;
     public Image thumbnailImage;
-
+    public GameObject mask;
     public Button part1Button;
     public Button subpageButton;
     public Button part2Button;
@@ -48,10 +49,13 @@ public class Calling_Archives : MonoBehaviour
     private List<GameObject> createdUIElements = new List<GameObject>();
     private List<AudioSource> playingAudioSources = new List<AudioSource>();
 
+    public int nowplayingclip;
+    public Slider Sliderr;
+
     [Obsolete]
     private void Start()
     {
-        StartCoroutine(RefreshArchiveData());
+        refresh();
         // Add a click listener to the stop all button
         stopAllButton1.onClick.AddListener(StopAllAudio);
         stopAllButton2.onClick.AddListener(StopAllAudio);
@@ -59,19 +63,15 @@ public class Calling_Archives : MonoBehaviour
     }
 
     [Obsolete]
-    private IEnumerator RefreshArchiveData()
+    public void refresh()
     {
-        while (true)
-        {
-            Debug.Log("Refreshing archive data...");
+        ClearArchiveUI();
 
-            ClearArchiveUI();
-
-            UpdateArchiveUI();
-
-            yield return new WaitForSeconds(refreshInterval);
-        }
+        UpdateArchiveUI();
     }
+
+
+   
 
     [Obsolete]
     private void UpdateArchiveUI()
@@ -147,9 +147,9 @@ public class Calling_Archives : MonoBehaviour
    // part2Button.onClick.RemoveAllListeners();
      //   part2Button.onClick.AddListener(() => audiofuntion(1)); //PlayMP3(archive.playlist[0].data[1].file));
 }
-    public void audiofuntionstart(int clip)
+    public void audiofuntionstart(int clip, Slider slider)
     {
-       
+        InvokeRepeating("updateslider", 1, 1);
         foreach (MediaPlayer m in mediaPlayer)
         {
             m.Stop();
@@ -164,32 +164,71 @@ public class Calling_Archives : MonoBehaviour
         
 
         Debug.Log("clip =" + clip);
+
+        mediaPlayer[clip].Events.AddListener(HandleEvent);
         mediaPlayer[clip].Play();
         
 
-        
+        TimeRanges seekRanges = mediaPlayer[clip].Control.GetSeekableTimes();
+
+        slider.maxValue = (float)seekRanges.MaxTime;
+        nowplayingclip = clip;
+
     }
-    private void Update()
+   
+
+    // This method is called whenever there is an event from the MediaPlayer
+    void HandleEvent(MediaPlayer mp, MediaPlayerEvent.EventType eventType, ErrorCode code)
     {
+        Debug.Log("MediaPlayer " + mp.name + " generated event: " + eventType.ToString());
+
+        if (eventType == MediaPlayerEvent.EventType.FinishedPlaying)
+        {
+            Debug.Log("we got this!");
+        }
         
+        if (eventType == MediaPlayerEvent.EventType.Error)
+        {
+            Debug.LogError("Error: " + code);
+        }
     }
+
+
     public void audiofuntionstop(int clip)
     {
         Debug.Log("clip =" + clip);
         mediaPlayer[clip].Stop();
         
     }
-    public void updateBuutons(Button playthisbutton, Button pasuebutton, int which)
+    public void updateBuutons(Button playthisbutton, Button pasuebutton, Slider slider, int which)
     {
         Debug.Log("THE BUTTON: " + playthisbutton.name + "which: " + which);
-        
+        slider.onValueChanged.RemoveAllListeners();
+        slider.onValueChanged.AddListener(delegate { ValueChangeCheck(slider); });
+        Sliderr = slider;
         playthisbutton.onClick.RemoveAllListeners();
-        playthisbutton.onClick.AddListener(() => audiofuntionstart(which));
+        playthisbutton.onClick.AddListener(() => audiofuntionstart(which, slider));
         pasuebutton.onClick.RemoveAllListeners();
         pasuebutton.onClick.AddListener(() => audiofuntionstop(which));
         pausebuttons.Add(pasuebutton);
         playbuttons.Add(playthisbutton);
         
+    }
+    public void ValueChangeCheck(Slider slider)
+    {
+
+        mediaPlayer[nowplayingclip].Control.SeekFast(slider.value);
+
+    }
+    public void updateslider()
+    {
+        Sliderr.onValueChanged.RemoveAllListeners();
+
+        Sliderr.value = (float)mediaPlayer[nowplayingclip].Control.GetCurrentTime();
+
+        Sliderr.onValueChanged.AddListener(delegate { ValueChangeCheck(Sliderr); });
+
+
     }
     public void back()
     {
@@ -207,42 +246,47 @@ public class Calling_Archives : MonoBehaviour
     private void OnArchiveButtonClick(ArchiveData archive)
     {
         back();
-        var interations = archive.playlist.Count;
-        for (int ii = 0; ii < interations; ii++)
+        if (archive.playlist != null)
         {
-
-            if (archive.playlist[ii].data.Count > 0)
+            var interations = archive.playlist.Count;
+            for (int ii = 0; ii < interations; ii++)
             {
-                string text = archive.playlist[ii].name;
 
-                var iterationCount = archive.playlist[ii].data.Count;
-                for (int i = 0; i < iterationCount; i++)
+                if (archive.playlist[ii].data.Count > 0)
                 {
-                    //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
+                    string text = archive.playlist[ii].name;
+
+                    var iterationCount = archive.playlist[ii].data.Count;
+                    for (int i = 0; i < iterationCount; i++)
+                    {
+                        //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[i].file, i));
+                        if (i + ii <= mediaPlayer.Length - 1)
+                        {
+
+                            mediaPlayer[ii + i].OpenMedia(new MediaPath(archive.playlist[ii].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
+
+                            GameObject partpart = Instantiate(parts, contentPlayOnDemand);
+                            partpart.SetActive(true);
+                            TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
+                            Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
+                            Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
+                            Slider slider = partpart.transform.Find("Slider").GetComponent<Slider>();
+                            int iii = i + ii;
+                            updateBuutons(playbutton, pausebutton, slider, iii);
 
 
-                    mediaPlayer[ii+i].OpenMedia(new MediaPath(archive.playlist[ii].data[i].file, MediaPathType.AbsolutePathOrURL), autoPlay: false);
 
-                    GameObject partpart = Instantiate(parts, contentPlayOnDemand);
-                    partpart.SetActive(true);
-                    TextMeshProUGUI title = partpart.transform.Find("Text (TMP) titel").GetComponent<TextMeshProUGUI>();
-                    Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
-                    Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
-                    int iii = i + ii;
-                    updateBuutons(playbutton, pausebutton, iii);
+                            title.text = text + " - " + archive.playlist[ii].data[i].title;
+                        }
 
-
-
-                    title.text = text +" - "+ archive.playlist[ii].data[i].title;
+                    }
 
 
                 }
-
-
-            }
-            else
-            {
-                PlayOndemand.SetActive(false);
+                else
+                {
+                    PlayOndemand.SetActive(false);
+                }
             }
         }
         //StartCoroutine(LoadAudioFromURL(archive.playlist[0].data[0].file, 0));
@@ -302,7 +346,7 @@ public class Calling_Archives : MonoBehaviour
         endTimeTMP.gameObject.SetActive(true);
         descriptionTMP.gameObject.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup);
-       
+        mask.GetComponent<dropdownsize>().rreset();
 
     }
 
@@ -371,15 +415,7 @@ public class Calling_Archives : MonoBehaviour
         createdUIElements.Clear();
     }
 
-    public void PlayMP3(string mp3URL, int data)
-    {
-        if (!string.IsNullOrEmpty(mp3URL) && audioSource != null)
-        {
-            StartCoroutine(LoadAudioFromURL(mp3URL, data));
-            // Add the audio source to the list of playing audio sources
-            playingAudioSources.Add(audioSource);
-        }
-    }
+   
 
     public void StopAllAudio()
     {
@@ -391,47 +427,8 @@ public class Calling_Archives : MonoBehaviour
         playingAudioSources.Clear();
     }
 
-    private IEnumerator LoadAudioFromURL(string mp3URL, int data)
-    {
-        Debug.Log("Attempting to load audio from URL: " + mp3URL);
+   
 
-
-
-        using (var www = UnityWebRequestMultimedia.GetAudioClip(mp3URL, AudioType.MPEG))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("Error loading audio from URL: " + mp3URL);
-                Debug.LogError("Error: " + www.error);
-            }
-            else
-            {
-                Debug.Log(mp3URL + "Downloading ");
-                AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
-
-                if (audioClip != null)
-                {
-                    audioClips.Add(audioClip);
-                    //audioSource.Stop();
-                    //audioSource.clip = audioClip;
-                    //audioSource.Play(0);
-                    Debug.Log("Audio downloaded successfully and assigned to audio source: " + mp3URL);
-                    Debug.Log(audioClips);
-                }
-                else
-                {
-                    Debug.LogError("Error loading audio clip from URL: " + mp3URL);
-                }
-            }
-        }
-    }
-
-   public void orderlist()
-    {
-        
-    }
 
     public void SetContentActive()
     {

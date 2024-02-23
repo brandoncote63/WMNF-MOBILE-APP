@@ -11010,7 +11010,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 869747192}
   - {fileID: 384570369}
   m_Father: {fileID: 593155376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12549,7 +12548,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 12:00 PM - 1:00 PM
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5b1aa2577bb864978866896ed993842e, type: 2}
   m_sharedMaterial: {fileID: 4127640640370245278, guid: 5b1aa2577bb864978866896ed993842e, type: 2}
@@ -12886,6 +12885,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1526316635}
+  - {fileID: 869747192}
   - {fileID: 1618202978}
   - {fileID: 2085447199}
   - {fileID: 1730977001}
@@ -20017,6 +20017,135 @@ MonoBehaviour:
   - {fileID: 62812890}
   - {fileID: 1512135372}
   - {fileID: 1861938102}
+  - {fileID: 791459822}
+  - {fileID: 968004874}
+  - {fileID: 117628723}
+  - {fileID: 178654565}
+  - {fileID: 203642241}
+  - {fileID: 1341008927}
+  - {fileID: 1501207166}
+  - {fileID: 147966532}
+  - {fileID: 742258275}
+  - {fileID: 2067638243}
+  - {fileID: 1676034977}
+  - {fileID: 847432007}
+  - {fileID: 807205232}
+  - {fileID: 1272603435}
+  - {fileID: 809247029}
+  - {fileID: 1195948676}
+  - {fileID: 910798468}
+  - {fileID: 1624467926}
+  - {fileID: 2097238090}
+  - {fileID: 2023828029}
+  - {fileID: 1622593373}
+  - {fileID: 398541271}
+  - {fileID: 39909545}
+  - {fileID: 1203500674}
+  - {fileID: 1768152188}
+  - {fileID: 2031981877}
+  - {fileID: 56150234}
+  - {fileID: 1564375321}
+  - {fileID: 1965860948}
+  - {fileID: 489484900}
+  - {fileID: 77459054}
+  - {fileID: 98223773}
+  - {fileID: 1784378869}
+  - {fileID: 1375243177}
+  - {fileID: 985103908}
+  - {fileID: 564779237}
+  - {fileID: 1572656265}
+  - {fileID: 1825631895}
+  - {fileID: 1719643973}
+  - {fileID: 1020790335}
+  - {fileID: 1653242596}
+  - {fileID: 967209059}
+  - {fileID: 2036622136}
+  - {fileID: 23850228}
+  - {fileID: 1944388191}
+  - {fileID: 1773479671}
+  - {fileID: 1735651475}
+  - {fileID: 31356001}
+  - {fileID: 848632815}
+  - {fileID: 1289245210}
+  - {fileID: 1379311548}
+  - {fileID: 800295267}
+  - {fileID: 107944863}
+  - {fileID: 1267384133}
+  - {fileID: 1872911176}
+  - {fileID: 2001455048}
+  - {fileID: 1669711292}
+  - {fileID: 44356870}
+  - {fileID: 1441375004}
+  - {fileID: 1358468186}
+  - {fileID: 691277810}
+  - {fileID: 347245625}
+  - {fileID: 1044899872}
+  - {fileID: 1239724480}
+  - {fileID: 2124964461}
+  - {fileID: 1081955423}
+  - {fileID: 1978684554}
+  - {fileID: 654450473}
+  - {fileID: 994092414}
+  - {fileID: 1674239583}
+  - {fileID: 500825906}
+  - {fileID: 465630146}
+  - {fileID: 910024175}
+  - {fileID: 1456801563}
+  - {fileID: 1486606490}
+  - {fileID: 244611204}
+  - {fileID: 458189048}
+  - {fileID: 690289824}
+  - {fileID: 861712570}
+  - {fileID: 858049874}
+  - {fileID: 1503492246}
+  - {fileID: 921010407}
+  - {fileID: 60844833}
+  - {fileID: 331296140}
+  - {fileID: 98392406}
+  - {fileID: 1885905671}
+  - {fileID: 76714939}
+  - {fileID: 733460599}
+  - {fileID: 1256715498}
+  - {fileID: 92155394}
+  - {fileID: 1563313296}
+  - {fileID: 1129598119}
+  - {fileID: 1240519885}
+  - {fileID: 1271036228}
+  - {fileID: 335633591}
+  - {fileID: 68274161}
+  - {fileID: 533970023}
+  - {fileID: 1766247262}
+  - {fileID: 1620968389}
+  - {fileID: 43202883}
+  - {fileID: 212814234}
+  - {fileID: 1136221467}
+  - {fileID: 2038660487}
+  - {fileID: 1609186065}
+  - {fileID: 1773460917}
+  - {fileID: 1539061637}
+  - {fileID: 1125952119}
+  - {fileID: 271899547}
+  - {fileID: 124169102}
+  - {fileID: 861240746}
+  - {fileID: 389584996}
+  - {fileID: 1307268558}
+  - {fileID: 1291783947}
+  - {fileID: 1836660229}
+  - {fileID: 1197718880}
+  - {fileID: 740664862}
+  - {fileID: 1354638136}
+  - {fileID: 1864934148}
+  - {fileID: 2146606071}
+  - {fileID: 1927401671}
+  listenPausebuttons:
+  - {fileID: 806529022}
+  - {fileID: 1041882142}
+  - {fileID: 1279012855}
+  - {fileID: 1644328199}
+  - {fileID: 1118751291}
+  subpageArkive: {fileID: 989818749}
+  subpageScedule: {fileID: 1751427228}
+  onlistenpage: 1
 --- !u!1 &520467121
 GameObject:
   m_ObjectHideFlags: 0
@@ -21737,6 +21866,11 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
+--- !u!1 &564829123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 816043990454997135, guid: 914ffb9dea477418abdd079809695412, type: 3}
+  m_PrefabInstance: {fileID: 390373803431576894}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &570240522
 GameObject:
   m_ObjectHideFlags: 0
@@ -22368,7 +22502,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: -10.653137}
+  m_AnchoredPosition: {x: -0.000030517578, y: -10.653076}
   m_SizeDelta: {x: 0, y: -10.653}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &593155377
@@ -24063,7 +24197,19 @@ MonoBehaviour:
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 869747191}
+        m_TargetAssemblyTypeName: Calling_Playlist, Assembly-CSharp
+        m_MethodName: onscrollchange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &662249417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32974,6 +33120,8 @@ MonoBehaviour:
   programnames: []
   endtime: []
   LEGTH: 0
+  scrollanker: {fileID: 564829123}
+  scrolltether: {fileID: 221169493}
 --- !u!4 &869747192
 Transform:
   m_ObjectHideFlags: 0
@@ -32983,11 +33131,11 @@ Transform:
   m_GameObject: {fileID: 869747189}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 397.83725, y: -53, z: 0}
+  m_LocalPosition: {x: -974.54724, y: 515.5466, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 221169494}
+  m_Father: {fileID: 276276124}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &871746017
 GameObject:
@@ -33263,7 +33411,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Slice of Life
+  m_text: Loading...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0bc3c5089173542bab4f45d39b99fc51, type: 2}
   m_sharedMaterial: {fileID: -6200202327634253087, guid: 0bc3c5089173542bab4f45d39b99fc51, type: 2}
@@ -64669,6 +64817,7 @@ MonoBehaviour:
   pausebuttons: []
   playbuttonsint: 
   parts: {fileID: 9175882705634952352, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
+  cameraa: {fileID: 519420028}
   PartTitels:
   - {fileID: 680689723}
   - {fileID: 0}
@@ -64678,6 +64827,7 @@ MonoBehaviour:
   PlayOndemand: {fileID: 1956470443}
   nowplayingclip: 0
   Sliderr: {fileID: 0}
+  PLAYINGNEXT: {fileID: 0}
 --- !u!224 &1730977001
 RectTransform:
   m_ObjectHideFlags: 0
@@ -71447,7 +71597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: 3.423645}
+  m_AnchoredPosition: {x: -0.000030517578, y: 3.423706}
   m_SizeDelta: {x: 0, y: 3.4243}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1876581729
@@ -72646,6 +72796,18 @@ MonoBehaviour:
       - m_Target: {fileID: 276276127}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Donate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 242075911}
+        m_TargetAssemblyTypeName: TipJar, Assembly-CSharp
+        m_MethodName: tip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

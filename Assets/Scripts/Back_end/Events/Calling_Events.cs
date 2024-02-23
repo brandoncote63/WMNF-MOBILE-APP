@@ -51,14 +51,14 @@ public class Calling_Events : MonoBehaviour
     [Obsolete]
     private void Start()
     {
-        StartCoroutine(RefreshEventData());
+        RefreshEventData();
     }
 
     [Obsolete]
-    private IEnumerator RefreshEventData()
+    private void RefreshEventData()
     {
-        while (true)
-        {
+        
+        
             RSSFeed rssFeed = APIManager_Events.GetEventsFromRSS(feedUrl);
 
             ClearEventUI(); // Clear old instances before refreshing
@@ -158,8 +158,8 @@ public class Calling_Events : MonoBehaviour
                 timeTMP.text = "";
             }
 
-            yield return new WaitForSeconds(refreshInterval);
-        }
+           
+        
     }
 
     private void OnEventButtonClick(RSSFeedItem item)
@@ -312,7 +312,7 @@ public class Calling_Events : MonoBehaviour
         .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
         .Share();
 #elif UNITY_IOS && !UNITY_EDITOR
-        ShareOniOS(title, link);
+        ShareOniOS(link,title);
 #else
         // For other platforms (Windows, macOS, etc.), display a simple share prompt.
         ShowSharePopup(title + " " + link);
@@ -331,7 +331,7 @@ public class Calling_Events : MonoBehaviour
     private void ShowSharePopup(string message)
     {
         // Implement a platform-specific share dialogue here (e.g., using native plugins).
-        Debug.Log("Sharing on this platform is not supported.");
+        Debug.Log("Sharing on this platform is not supported." + message);
     }
 
     private IEnumerator LoadSpriteImage(string url, Image image)

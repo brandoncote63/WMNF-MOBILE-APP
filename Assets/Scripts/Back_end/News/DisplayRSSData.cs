@@ -37,12 +37,12 @@ public class DisplayRSSData : MonoBehaviour
     {
         
         Debug.Log("Fetching and displaying RSS data...");
-      
+        FetchAndDisplayRSSData();
 
     }
     
 
-    private IEnumerator FetchAndDisplayRSSData()
+    private void FetchAndDisplayRSSData()
     {
         List<RSSItem> rssItems = ParseRSSFeed(feedUrl);
 
@@ -98,7 +98,7 @@ public class DisplayRSSData : MonoBehaviour
             
 
         }
-        yield return null;
+        
 
        
       
@@ -279,7 +279,7 @@ public class DisplayRSSData : MonoBehaviour
 
 
 #elif UNITY_IOS && !UNITY_EDITOR
-            ShareOniOS(title, link);
+            ShareOniOS(link,title);
 #else
         // For other platforms (Windows, macOS, etc.), display a simple share prompt.
         ShowSharePopup(title + " " + link);
@@ -309,7 +309,7 @@ public class DisplayRSSData : MonoBehaviour
         if (more) { pageNumber++;
             page.text = "Page: " + pageNumber.ToString();
             feedUrl = "https://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
-            StartCoroutine(FetchAndDisplayRSSData());
+            FetchAndDisplayRSSData();
         }
 
         else {
@@ -318,7 +318,7 @@ public class DisplayRSSData : MonoBehaviour
             { pageNumber = pageNumber - 1;
                 page.text = "Page: " + pageNumber.ToString();
                 feedUrl = "https://www.wmnf.org/category/news/feed" + "/?paged=" + pageNumber.ToString();
-                StartCoroutine(FetchAndDisplayRSSData());
+                FetchAndDisplayRSSData();
             }
             else { }
            

@@ -15,23 +15,29 @@ public class Calling_UpNext : MonoBehaviour
     [System.Obsolete]
     private void Start()
     {
-        StartCoroutine(RefreshUpNextData());
+        InvokeRepeating("resett", 60, 60);
+        resett();
     }
 
     [System.Obsolete]
-    private IEnumerator RefreshUpNextData()
+    public void resett()
     {
-        while (true)
-        {
-            Debug.Log("Refreshing Up Next data...");
+        ClearUpNextUI(); // Clear old instances before refreshing
 
-            ClearUpNextUI(); // Clear old instances before refreshing
-
-            UpdateUpNextUI();
-
-            yield return new WaitForSeconds(refreshInterval);
-        }
+        UpdateUpNextUI();
     }
+   // [System.Obsolete]
+   // private IEnumerator RefreshUpNextData()
+   // {
+    //    while (true)
+    //    {
+     //       Debug.Log("Refreshing Up Next data...");
+
+            
+
+      //      yield return new WaitForSeconds(refreshInterval);
+      //  }
+   // }
 
     [System.Obsolete]
     private void UpdateUpNextUI()

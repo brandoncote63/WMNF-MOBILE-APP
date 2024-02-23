@@ -38,7 +38,7 @@ public class Calling_Archives : MonoBehaviour
     public List<Button> pausebuttons;
     public List<int> playbuttonsint;
     public GameObject parts;
-    
+    public GameObject cameraa;
     public TextMeshProUGUI[] PartTitels;
     public GameObject Content;
     public Transform contentPlayOnDemand;
@@ -51,6 +51,9 @@ public class Calling_Archives : MonoBehaviour
 
     public int nowplayingclip;
     public Slider Sliderr;
+
+    
+    public Button PLAYINGNEXT;
 
     [Obsolete]
     private void Start()
@@ -163,7 +166,7 @@ public class Calling_Archives : MonoBehaviour
         }
         
 
-        Debug.Log("clip =" + clip);
+       
 
         mediaPlayer[clip].Events.AddListener(HandleEvent);
         mediaPlayer[clip].Play();
@@ -173,7 +176,18 @@ public class Calling_Archives : MonoBehaviour
 
         slider.maxValue = (float)seekRanges.MaxTime;
         nowplayingclip = clip;
+        if (playbuttons.Count > clip + 1)
+        {
+            
+            PLAYINGNEXT = playbuttons[clip + 1];
 
+        }
+
+    }
+   
+    public void playnextclip()
+    {
+        PLAYINGNEXT.onClick.Invoke();
     }
    
 
@@ -181,10 +195,16 @@ public class Calling_Archives : MonoBehaviour
     void HandleEvent(MediaPlayer mp, MediaPlayerEvent.EventType eventType, ErrorCode code)
     {
         Debug.Log("MediaPlayer " + mp.name + " generated event: " + eventType.ToString());
+        if (eventType == MediaPlayerEvent.EventType.Unpaused)
+        {
+            cameraa.GetComponent<masteraudio>().fixpasuetomatch();
+        }
 
         if (eventType == MediaPlayerEvent.EventType.FinishedPlaying)
         {
             Debug.Log("we got this!");
+
+            playnextclip();
         }
         
         if (eventType == MediaPlayerEvent.EventType.Error)
@@ -272,6 +292,7 @@ public class Calling_Archives : MonoBehaviour
                             Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
                             Slider slider = partpart.transform.Find("Slider").GetComponent<Slider>();
                             int iii = i + ii;
+                            
                             updateBuutons(playbutton, pausebutton, slider, iii);
 
 

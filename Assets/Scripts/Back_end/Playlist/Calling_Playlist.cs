@@ -65,29 +65,33 @@ public class Calling_Playlist : MonoBehaviour
     public List<string> endtime;
     public int LEGTH;
 
+    public GameObject scrollanker;
+    public GameObject scrolltether;
+
     private void Start()
     {
-        refreshCoroutine = StartCoroutine(RefreshPlaylistData());
+        RefreshPlaylistData();
     }
 
-    private void OnDisable()
+    public void onscrollchange()
     {
-
-        if (refreshCoroutine != null)
+        if (scrollanker.transform.position.y > scrolltether.transform.position.y)
         {
-            StopCoroutine(refreshCoroutine);
-            refreshCoroutine = null;
+            RefreshPlaylistData();
+            
+            Debug.Log("SUCESSFULLY");
         }
+       
     }
-
-    private IEnumerator RefreshPlaylistData()
+ 
+    private void RefreshPlaylistData()
     {
-        while (true)
-        {
+       
+        
             Debug.Log("Refreshing Playlist data...");
-            yield return StartCoroutine(FetchPlaylistData(OnPlaylistDataReceived));
-            yield return new WaitForSeconds(refreshInterval);
-        }
+           StartCoroutine(FetchPlaylistData(OnPlaylistDataReceived));
+          
+        
     }
 
     private IEnumerator FetchPlaylistData(System.Action<List<PlaylistItem>> callback)

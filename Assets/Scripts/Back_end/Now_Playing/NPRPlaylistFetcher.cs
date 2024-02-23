@@ -60,10 +60,11 @@ public class NPRPlaylistFetcher : MonoBehaviour
    
     public string startresults2;
     public string endresults2;
+
     [Obsolete]
-    private IEnumerator Start()
+    void Start()
     {
-        yield return FetchPlaylistData();
+        UpdateUpNextUI();
     }
 
     [Obsolete]
@@ -100,7 +101,7 @@ public class NPRPlaylistFetcher : MonoBehaviour
 
                         // Update the TextMeshPro UI elements
                         //titleText.text = title;
-                        UpdateUpNextUI();
+                        
                         //timeFrameText.text = timeFrame;
                     }
                     else

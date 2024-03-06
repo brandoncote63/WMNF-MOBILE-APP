@@ -23,7 +23,7 @@ public class masteraudio : MonoBehaviour
         {
             if (m == player)
             {
-                Debug.Log("WE HAVE LANDED3");
+               
                 
             }
             else
@@ -40,12 +40,12 @@ public class masteraudio : MonoBehaviour
     {
         foreach (Button b in listenPausebuttons)
         {
-            Debug.Log("was not active in hhhhhhhhhi");
+           
             
             
 
                 b.onClick.Invoke();
-                Debug.Log("WE HAVE LANDED");
+               
             
             
         }

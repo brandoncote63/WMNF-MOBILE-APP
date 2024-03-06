@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "160574897205",
+    "project_id": "magnetic-racer-242820",
+    "storage_bucket": "magnetic-racer-242820.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160574897205:android:9c49a3db2c919cb0f9057c",
+        "android_client_info": {
+          "package_name": "wmnf.org.wmnf.wmnf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160574897205-a2m2ucd3akk72749p7s2nm7kkjf52nkf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzuVOm1mW2XgYwMaN26W9QtZX9BXL5vuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160574897205-a2m2ucd3akk72749p7s2nm7kkjf52nkf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

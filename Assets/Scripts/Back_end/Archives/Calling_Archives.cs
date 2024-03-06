@@ -10,6 +10,7 @@ using HtmlAgilityPack;
 using WMNF_API;
 
 using RenderHeads.Media.AVProVideo;
+using Firebase.Analytics;
 //using UnityEngine.UIElements;
 
 public class Calling_Archives : MonoBehaviour
@@ -50,8 +51,13 @@ public class Calling_Archives : MonoBehaviour
     private List<AudioSource> playingAudioSources = new List<AudioSource>();
 
     public int nowplayingclip;
-    public Slider Sliderr;
+    public List<Slider> Sliderrs;
+    public Slider currentSlider;
 
+    public TextMeshProUGUI curt;
+    public TextMeshProUGUI tott;
+
+   
     
     public Button PLAYINGNEXT;
 
@@ -150,8 +156,9 @@ public class Calling_Archives : MonoBehaviour
    // part2Button.onClick.RemoveAllListeners();
      //   part2Button.onClick.AddListener(() => audiofuntion(1)); //PlayMP3(archive.playlist[0].data[1].file));
 }
-    public void audiofuntionstart(int clip, Slider slider)
+    public void audiofuntionstart(int clip, Slider slider, TextMeshProUGUI ct, TextMeshProUGUI tt, string partTitel)
     {
+        FirebaseAnalytics.LogEvent("Archive_program_episode_play", new Parameter("Episode_ID", partTitel));
         InvokeRepeating("updateslider", 1, 1);
         foreach (MediaPlayer m in mediaPlayer)
         {
@@ -165,16 +172,37 @@ public class Calling_Archives : MonoBehaviour
             
         }
         
-
+        
        
 
         mediaPlayer[clip].Events.AddListener(HandleEvent);
         mediaPlayer[clip].Play();
+
+        TimeSpan ts = TimeSpan.FromSeconds( mediaPlayer[clip].Info.GetDuration());
+        if (ts.Hours > 0)
+        {
+            tt.text = ts.ToString("h\\:mm\\:ss");
+
+        }
+        else { tt.text = ts.ToString("mm\\:ss"); }
         
+
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[clip].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            ct.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { ct.text = tss.ToString("mm\\:ss"); }
+
 
         TimeRanges seekRanges = mediaPlayer[clip].Control.GetSeekableTimes();
 
         slider.maxValue = (float)seekRanges.MaxTime;
+        curt = ct;
+        tott = tt;
+        currentSlider = slider;
+
         nowplayingclip = clip;
         if (playbuttons.Count > clip + 1)
         {
@@ -220,33 +248,93 @@ public class Calling_Archives : MonoBehaviour
         mediaPlayer[clip].Stop();
         
     }
-    public void updateBuutons(Button playthisbutton, Button pasuebutton, Slider slider, int which)
+    public void updateBuutons(Button playthisbutton, Button pasuebutton, Slider slider, int which, Button ff, Button rewid, TextMeshProUGUI ct, TextMeshProUGUI tt, string parttitel)
     {
         Debug.Log("THE BUTTON: " + playthisbutton.name + "which: " + which);
         slider.onValueChanged.RemoveAllListeners();
         slider.onValueChanged.AddListener(delegate { ValueChangeCheck(slider); });
-        Sliderr = slider;
+       
         playthisbutton.onClick.RemoveAllListeners();
-        playthisbutton.onClick.AddListener(() => audiofuntionstart(which, slider));
+        playthisbutton.onClick.AddListener(() => audiofuntionstart(which, slider,ct,tt, parttitel));
         pasuebutton.onClick.RemoveAllListeners();
         pasuebutton.onClick.AddListener(() => audiofuntionstop(which));
+        ff.onClick.RemoveAllListeners();
+        ff.onClick.AddListener(() => audiofunctionForward(which));
+        rewid.onClick.RemoveAllListeners();
+        rewid.onClick.AddListener(() => audioFuntionBackwards(which));
         pausebuttons.Add(pasuebutton);
         playbuttons.Add(playthisbutton);
-        
+        Sliderrs.Add( slider);
+
     }
     public void ValueChangeCheck(Slider slider)
     {
-
+        
         mediaPlayer[nowplayingclip].Control.SeekFast(slider.value);
+        
+
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[nowplayingclip].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            curt.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { curt.text = tss.ToString("mm\\:ss"); }
 
     }
+    public void audiofunctionForward(int i)
+    {
+        mediaPlayer[i].Control.Seek(mediaPlayer[i].Control.GetCurrentTime() + 15);
+        
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[i].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            curt.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { curt.text = tss.ToString("mm\\:ss"); }
+    }
+    public void audioFuntionBackwards(int i)
+    {
+        mediaPlayer[i].Control.Seek(mediaPlayer[i].Control.GetCurrentTime() - 15);
+        
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[i].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            curt.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { curt.text = tss.ToString("mm\\:ss"); }
+
+
+    }
+   
     public void updateslider()
     {
-        Sliderr.onValueChanged.RemoveAllListeners();
+        currentSlider.onValueChanged.RemoveAllListeners();
 
-        Sliderr.value = (float)mediaPlayer[nowplayingclip].Control.GetCurrentTime();
+        float F = (float)mediaPlayer[nowplayingclip].Control.GetCurrentTime();
+        currentSlider.value = F;
+        
+       
+        currentSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(currentSlider); });
 
-        Sliderr.onValueChanged.AddListener(delegate { ValueChangeCheck(Sliderr); });
+
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[nowplayingclip].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            curt.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { curt.text = tss.ToString("mm\\:ss"); }
+
+        TimeSpan ts = TimeSpan.FromSeconds(mediaPlayer[nowplayingclip].Info.GetDuration());
+        if (ts.Hours > 0)
+        {
+            tott.text = ts.ToString("h\\:mm\\:ss");
+
+        }
+        else { tott.text = ts.ToString("mm\\:ss"); }
 
 
     }
@@ -254,6 +342,7 @@ public class Calling_Archives : MonoBehaviour
     {
         pausebuttons.Clear();
         playbuttons.Clear();
+        Sliderrs.Clear();
        
         foreach (Transform child in contentPlayOnDemand)
         {
@@ -266,6 +355,9 @@ public class Calling_Archives : MonoBehaviour
     private void OnArchiveButtonClick(ArchiveData archive)
     {
         back();
+
+        FirebaseAnalytics.LogEvent("Archive_program_page_view",new Parameter("Program_ID",archive.title));
+
         if (archive.playlist != null)
         {
             var interations = archive.playlist.Count;
@@ -291,13 +383,18 @@ public class Calling_Archives : MonoBehaviour
                             Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
                             Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
                             Slider slider = partpart.transform.Find("Slider").GetComponent<Slider>();
+                            Button fastforward = partpart.transform.Find("fastforward").GetComponent<Button>();
+                            Button backtrack = partpart.transform.Find("backtrack").GetComponent<Button>();
+                            TextMeshProUGUI curretTime = partpart.transform.Find("timetotal").GetComponent<TextMeshProUGUI>();
+                            TextMeshProUGUI totalTime = partpart.transform.Find("timecurret").GetComponent<TextMeshProUGUI>();
                             int iii = i + ii;
-                            
-                            updateBuutons(playbutton, pausebutton, slider, iii);
-
-
-
                             title.text = text + " - " + archive.playlist[ii].data[i].title;
+                            string TITELANDPARTTITEL = archive.title + " : " + title.text;
+                            updateBuutons(playbutton, pausebutton, slider, iii, fastforward, backtrack, curretTime, totalTime, TITELANDPARTTITEL);
+
+
+
+                            
                         }
 
                     }

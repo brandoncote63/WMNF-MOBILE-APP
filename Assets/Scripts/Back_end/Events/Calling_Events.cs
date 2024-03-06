@@ -15,6 +15,8 @@ using static ScheduleManager;
 using System.Threading;
 
 using UnityEngine.Networking;
+using Firebase.Analytics;
+
 
 public class Calling_Events : MonoBehaviour
 {
@@ -164,6 +166,7 @@ public class Calling_Events : MonoBehaviour
 
     private void OnEventButtonClick(RSSFeedItem item)
     {
+        FirebaseAnalytics.LogEvent("Event_selected_page_view", new Parameter("Event_ID", item.title));
         currentExpandedEvent = expandedEventContainer.gameObject;
         currentExpandedEvent.SetActive(true);
 
@@ -210,7 +213,7 @@ public class Calling_Events : MonoBehaviour
         if (!string.IsNullOrEmpty(extractedLink))
         {
             linkUIText.GetComponent<Button>().onClick.RemoveAllListeners();
-            linkUIText.GetComponent<Button>().onClick.AddListener(() => OpenLink(extractedLink));
+            linkUIText.GetComponent<Button>().onClick.AddListener(() => OpenLink(extractedLink, item.title));
         }
         else
         {
@@ -225,7 +228,7 @@ public class Calling_Events : MonoBehaviour
         readMoreUIText.text = "Read More >>";
 
         readMoreUIText.GetComponent<Button>().onClick.RemoveAllListeners();
-        readMoreUIText.GetComponent<Button>().onClick.AddListener(() => OpenLink(extractedLink));
+        readMoreUIText.GetComponent<Button>().onClick.AddListener(() => OpenLink(extractedLink, item.title));
 
         // Set up the first share button
         shareButton1.onClick.RemoveAllListeners(); // Clear existing click listeners
@@ -253,8 +256,9 @@ public class Calling_Events : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(vlayoutgroup2);
     }
 
-    private void OpenLink(string url)
+    private void OpenLink(string url, string Title)
     {
+        FirebaseAnalytics.LogEvent("Event_Link_click", new Parameter("Event_ID", Title));
         // Open the link in a web browser or implement your desired behavior here
         Application.OpenURL(url);
     }
@@ -306,6 +310,7 @@ public class Calling_Events : MonoBehaviour
 
     private void Share(string link, string title)
     {
+        FirebaseAnalytics.LogEvent("Event_share_click", new Parameter("Event_ID", title));
 #if UNITY_ANDROID && !UNITY_EDITOR
          new NativeShare()
         .SetSubject("WMNF News").SetText(title).SetUrl(link)

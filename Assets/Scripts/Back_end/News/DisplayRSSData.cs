@@ -10,6 +10,7 @@ using System.Web;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using UnityEngine.Networking;
+using Firebase.Analytics;
 
 public class DisplayRSSData : MonoBehaviour
 {
@@ -110,6 +111,8 @@ public class DisplayRSSData : MonoBehaviour
 
     private void OnDataButtonClick(RSSItem item)
     {
+        FirebaseAnalytics.LogEvent("News_Article_page_view", new Parameter("Article_ID", item.Title));
+
         // Set the UI elements with the data from the clicked RSS item
         TextMeshProUGUI titleTMP = expandedDataUI.Find("Title").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI dateTMP = expandedDataUI.Find("Date").GetComponent<TextMeshProUGUI>();
@@ -132,7 +135,7 @@ public class DisplayRSSData : MonoBehaviour
 
         // Set up the "Read More" button
         readMoreButton.onClick.RemoveAllListeners(); // Clear existing click listeners
-        readMoreButton.onClick.AddListener(() => OpenLink(item.Link));
+        readMoreButton.onClick.AddListener(() => OpenLink(item.Link, item.Title));
 
         // Set up the first share button
         shareButton1.onClick.RemoveAllListeners(); // Clear existing click listeners
@@ -157,8 +160,9 @@ public class DisplayRSSData : MonoBehaviour
     }
 
     // Function to open the link in a web browser
-    private void OpenLink(string link)
+    private void OpenLink(string link, string titel)
     {
+        FirebaseAnalytics.LogEvent("News_Article_Link_click", new Parameter("Article_ID", titel));
         Application.OpenURL(link);
         Debug.Log($"Opened link: {link}");
     }
@@ -270,6 +274,8 @@ public class DisplayRSSData : MonoBehaviour
 
     private void Share(string link, string title)
     {
+        FirebaseAnalytics.LogEvent("News_article_share", new Parameter("Article_ID", title));
+
 #if UNITY_ANDROID && !UNITY_EDITOR
             
              new NativeShare()

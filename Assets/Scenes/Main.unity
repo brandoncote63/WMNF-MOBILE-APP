@@ -1329,9 +1329,9 @@ RectTransform:
   - {fileID: 2110888571}
   m_Father: {fileID: 198491395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 115.3876, y: -272.26318}
   m_SizeDelta: {x: 92.7752, y: 63.7922}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &35254065
@@ -1852,6 +1852,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 41240263}
   m_CullTransparentMesh: 1
+--- !u!1 &42379934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 42379936}
+  - component: {fileID: 42379935}
+  m_Layer: 0
+  m_Name: analitics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &42379935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42379934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c4f81be01a143fd927b1ef08f9bcbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &42379936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42379934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 609.1215, y: 1754.4673, z: 14.823914}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &43202881
 GameObject:
   m_ObjectHideFlags: 0
@@ -4261,6 +4305,11 @@ MonoBehaviour:
   pausebuttons: []
   nowplayingclip: 0
   Sliderr: {fileID: 0}
+  curt: {fileID: 0}
+  tott: {fileID: 0}
+  currentSlider: {fileID: 0}
+  PLAYINGNEXT: {fileID: 0}
+  cameraa: {fileID: 0}
 --- !u!1 &76228000
 GameObject:
   m_ObjectHideFlags: 0
@@ -6274,6 +6323,11 @@ MonoBehaviour:
   pausebuttons: []
   nowplayingclip: 0
   Sliderr: {fileID: 0}
+  curt: {fileID: 0}
+  tott: {fileID: 0}
+  currentSlider: {fileID: 0}
+  PLAYINGNEXT: {fileID: 0}
+  cameraa: {fileID: 0}
 --- !u!1 &113324768
 GameObject:
   m_ObjectHideFlags: 0
@@ -6948,10 +7002,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 198491395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 389.22546, y: 0}
-  m_SizeDelta: {x: 640.4509, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 389.22546, y: -877.5084}
+  m_SizeDelta: {x: 640.4509, y: 883.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &123686136
 MonoBehaviour:
@@ -7589,6 +7643,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: StreamListenHD
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 4 new sounds
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &132328258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8215,9 +8281,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 198491395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 393.2466, y: -1362.2264}
   m_SizeDelta: {x: 648.4932, y: 79.3759}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &157211940
@@ -8592,6 +8658,11 @@ MonoBehaviour:
   pausebuttons: []
   nowplayingclip: 0
   Sliderr: {fileID: 0}
+  curt: {fileID: 0}
+  tott: {fileID: 0}
+  currentSlider: {fileID: 0}
+  PLAYINGNEXT: {fileID: 0}
+  cameraa: {fileID: 0}
 --- !u!1 &161805899
 GameObject:
   m_ObjectHideFlags: 0
@@ -8980,10 +9051,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1245472011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 397.83725, y: 0}
-  m_SizeDelta: {x: 640.4509, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -1131.5706}
+  m_SizeDelta: {x: 640.4509, y: 883.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &178032444
 MonoBehaviour:
@@ -11109,9 +11180,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1245472011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -494.1955}
   m_SizeDelta: {x: 630.38, y: 370.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &223489095
@@ -11719,6 +11790,11 @@ MonoBehaviour:
   pausebuttons: []
   nowplayingclip: 0
   Sliderr: {fileID: 0}
+  curt: {fileID: 0}
+  tott: {fileID: 0}
+  currentSlider: {fileID: 0}
+  PLAYINGNEXT: {fileID: 0}
+  cameraa: {fileID: 0}
 --- !u!4 &243499035
 Transform:
   m_ObjectHideFlags: 0
@@ -12126,6 +12202,18 @@ MonoBehaviour:
       - m_Target: {fileID: 276276127}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ListenPage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: Listenpageview
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12865,6 +12953,7 @@ GameObject:
   - component: {fileID: 276276126}
   - component: {fileID: 276276125}
   - component: {fileID: 276276127}
+  - component: {fileID: 276276128}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -12995,6 +13084,20 @@ MonoBehaviour:
   color: {r: 0.16470589, g: 0.6784314, b: 0.57254905, a: 1}
   waited: 1
   timeDelay: 0.5
+--- !u!114 &276276128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276276123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0741f266a4bb84cbb89ea747605a7f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holder: {fileID: 869747189}
+  secounds: 5
 --- !u!1 &278423699
 GameObject:
   m_ObjectHideFlags: 0
@@ -13089,6 +13192,30 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 869747189}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: Playlistpageview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &278423702
 MonoBehaviour:
@@ -13291,6 +13418,18 @@ MonoBehaviour:
       - m_Target: {fileID: 607938953}
         m_TargetAssemblyTypeName: callDJ, Assembly-CSharp
         m_MethodName: CallPhoneNumber
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: callDJClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16121,9 +16260,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 198491395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 119, y: -331.98505}
   m_SizeDelta: {x: 100, y: 48.7915}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &365467539
@@ -16338,6 +16477,18 @@ MonoBehaviour:
       - m_Target: {fileID: 276276127}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Upnext
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: UpNextpageview
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19184,9 +19335,9 @@ RectTransform:
   - {fileID: 2136746855}
   m_Father: {fileID: 198491395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 151.706, y: -214.68355}
   m_SizeDelta: {x: 165.412, y: 44.5071}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &488009578
@@ -22329,9 +22480,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1245472011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -266.52438}
   m_SizeDelta: {x: 648.4932, y: 63.7922}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &590452639
@@ -22461,9 +22612,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1245472011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -1822.237}
   m_SizeDelta: {x: 100, y: 87.316}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &593155375
@@ -23719,6 +23870,11 @@ MonoBehaviour:
   pausebuttons: []
   nowplayingclip: 0
   Sliderr: {fileID: 0}
+  curt: {fileID: 0}
+  tott: {fileID: 0}
+  currentSlider: {fileID: 0}
+  PLAYINGNEXT: {fileID: 0}
+  cameraa: {fileID: 519420028}
 --- !u!1 &648394653
 GameObject:
   m_ObjectHideFlags: 0
@@ -26288,9 +26444,9 @@ RectTransform:
   - {fileID: 1917629519}
   m_Father: {fileID: 1606102095}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -48.3069}
   m_SizeDelta: {x: 754.9431, y: 90.6138}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &696964026
@@ -26516,6 +26672,18 @@ MonoBehaviour:
       - m_Target: {fileID: 377566143}
         m_TargetAssemblyTypeName: EMAIL, Assembly-CSharp
         m_MethodName: OpenDefaultEmailApp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: EmailClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27683,6 +27851,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: Newspageview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &744386251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28223,6 +28403,18 @@ MonoBehaviour:
       - m_Target: {fileID: 276276127}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Scedual
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: schedulepageview
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -31024,9 +31216,9 @@ RectTransform:
   - {fileID: 779358065}
   m_Father: {fileID: 198491395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 392.5635, y: -1445.3726}
   m_SizeDelta: {x: 647.127, y: 80.0565}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &827473245
@@ -33100,7 +33292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &869747191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33170,9 +33362,9 @@ RectTransform:
   - {fileID: 993946482}
   m_Father: {fileID: 1956470444}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 228.70966, y: -23.0001}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 451.4193, y: 50.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &871746019
@@ -34109,9 +34301,9 @@ RectTransform:
   - {fileID: 1624743991}
   m_Father: {fileID: 1434633494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -123.6138}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &900322620
@@ -34282,9 +34474,9 @@ RectTransform:
   - {fileID: 76228001}
   m_Father: {fileID: 1434633494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -49.3069}
   m_SizeDelta: {x: 754.9432, y: 90.6138}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &901503450
@@ -38961,6 +39153,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: StreamListenHD
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 2 The Urban Cafe
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1038598444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41646,9 +41850,9 @@ RectTransform:
   - {fileID: 1908343651}
   m_Father: {fileID: 1363460371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -48.3069}
   m_SizeDelta: {x: 754.9432, y: 90.6138}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1119355529
@@ -42806,6 +43010,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: Evventspageview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1136693992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42852,6 +43068,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 173699262}
     m_Modifications:
+    - target: {fileID: 510375643156997581, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 510375643156997581, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.07519531
+      objectReference: {fileID: 0}
+    - target: {fileID: 510375643156997581, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.12010002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078953155640343925, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078953155640343925, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.040802002
+      objectReference: {fileID: 0}
     - target: {fileID: 5147984176867332813, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -42870,7 +43106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6531573222587905068, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6531573222587905068, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_AnchorMin.x
@@ -42878,7 +43114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6531573222587905068, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6531573222587905068, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -42918,11 +43154,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6531573222587905068, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 332.53134
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6531573222587905068, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -91.76311
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6531573222587905068, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -44129,6 +44365,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: archivespageview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1196648484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44761,6 +45009,11 @@ MonoBehaviour:
   pausebuttons: []
   nowplayingclip: 0
   Sliderr: {fileID: 0}
+  curt: {fileID: 0}
+  tott: {fileID: 0}
+  currentSlider: {fileID: 0}
+  PLAYINGNEXT: {fileID: 0}
+  cameraa: {fileID: 0}
 --- !u!1 &1203500672
 GameObject:
   m_ObjectHideFlags: 0
@@ -45568,6 +45821,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: archivespageview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 276276127}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Archive
@@ -45747,6 +46012,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: StreamListenHD
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 1 88.5FM
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1236922659
@@ -46917,9 +47194,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 198491395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 119, y: -1532.4888}
   m_SizeDelta: {x: 100, y: 87.316}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1261193964
@@ -49765,9 +50042,9 @@ RectTransform:
   - {fileID: 1826962117}
   m_Father: {fileID: 198491395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 139, y: -119}
   m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1310891290
@@ -53186,9 +53463,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1245472011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -1609.1976}
   m_SizeDelta: {x: 648.4932, y: 51.1743}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1410139937
@@ -53866,6 +54143,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: StreamListenHD
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 3 the source
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1447658624
@@ -54659,6 +54948,18 @@ MonoBehaviour:
       - m_Target: {fileID: 276276127}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Events
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: Evventspageview
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -57925,9 +58226,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 198491395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 393.2466, y: -396.1446}
   m_SizeDelta: {x: 648.4932, y: 72.6676}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1573510271
@@ -58831,6 +59132,11 @@ MonoBehaviour:
   pausebuttons: []
   nowplayingclip: 0
   Sliderr: {fileID: 0}
+  curt: {fileID: 0}
+  tott: {fileID: 0}
+  currentSlider: {fileID: 0}
+  PLAYINGNEXT: {fileID: 0}
+  cameraa: {fileID: 0}
 --- !u!1 &1591739881
 GameObject:
   m_ObjectHideFlags: 0
@@ -63835,6 +64141,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: Newspageview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1708167996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64826,7 +65144,10 @@ MonoBehaviour:
   vlayoutgroup: {fileID: 1810808747}
   PlayOndemand: {fileID: 1956470443}
   nowplayingclip: 0
-  Sliderr: {fileID: 0}
+  Sliderrs: []
+  currentSlider: {fileID: 0}
+  curt: {fileID: 0}
+  tott: {fileID: 0}
   PLAYINGNEXT: {fileID: 0}
 --- !u!224 &1730977001
 RectTransform:
@@ -67896,9 +68217,9 @@ RectTransform:
   - {fileID: 2070674504}
   m_Father: {fileID: 173699262}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 228.70966, y: -23.0001}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 451.4193, y: 50.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1795100239
@@ -68989,6 +69310,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: StreamListenHD
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 1 88.5FM
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1821919398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69113,6 +69446,18 @@ MonoBehaviour:
       - m_Target: {fileID: 276276127}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Donate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: supportpageview
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -71421,6 +71766,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: Listenpageview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1874365996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72817,6 +73174,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: donateClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1920900843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73113,9 +73482,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1245472011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -1661.4337}
   m_SizeDelta: {x: 100, y: 32.4179}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1934417421
@@ -73259,9 +73628,9 @@ RectTransform:
   - {fileID: 1344467991}
   m_Father: {fileID: 1245472011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -1728.1108}
   m_SizeDelta: {x: 647.127, y: 80.0565}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1940608491
@@ -74971,9 +75340,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1245472011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 397.83725, y: -132.59415}
   m_SizeDelta: {x: 659.7576, y: 183.1883}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1983226158
@@ -75832,6 +76201,18 @@ MonoBehaviour:
       - m_Target: {fileID: 276276127}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Scedual
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: schedulepageview
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -81522,6 +81903,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 42379935}
+        m_TargetAssemblyTypeName: firerbaseSetup, Assembly-CSharp
+        m_MethodName: supportpageview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2145946408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82117,10 +82510,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1956470444}
     m_Modifications:
+    - target: {fileID: 510375643156997581, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078953155640343925, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5147984176867332813, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 316935022}
+    - target: {fileID: 5652130515038062528, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6531573222587905068, guid: fbd9618f978014777b0dd35c06101e7b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -83022,3 +83427,4 @@ SceneRoots:
   - {fileID: 967193440}
   - {fileID: 37748921}
   - {fileID: 1070565159}
+  - {fileID: 42379936}

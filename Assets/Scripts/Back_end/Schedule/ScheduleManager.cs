@@ -10,7 +10,8 @@ using System.Collections;
 using WMNF_API;
 using HtmlAgilityPack;
 using RenderHeads.Media.AVProVideo;
-using Unity.VisualScripting;
+using Firebase.Analytics;
+
 
 
 public class ScheduleManager : MonoBehaviour
@@ -44,6 +45,13 @@ public class ScheduleManager : MonoBehaviour
 
     public int nowplayingclip;
     public Slider Sliderr;
+
+    public TextMeshProUGUI curt;
+    public TextMeshProUGUI tott;
+    public Slider currentSlider;
+    public Button PLAYINGNEXT;
+    public GameObject cameraa;
+
     private void OnApplicationQuit()
     {
         foreach (var coroutine in activeCoroutines)
@@ -205,22 +213,7 @@ public class ScheduleManager : MonoBehaviour
         return innerText;
     }
 
-    private string RemoveImagesFromHtml(string htmlContent)
-    {
-        var doc = new HtmlDocument();
-        doc.LoadHtml(htmlContent);
-        var imgNodes = doc.DocumentNode.SelectNodes("//img");
-        if (imgNodes != null)
-        {
-            foreach (var imgNode in imgNodes)
-            {
-                imgNode.ParentNode.RemoveChild(imgNode);
-            }
-        }
-        var innerText = doc.DocumentNode.InnerHtml;
-        return innerText;
-    }
-
+   
     private IEnumerator LoadImage(Image image, string imageUrl)
     {
 
@@ -310,6 +303,8 @@ public class ScheduleManager : MonoBehaviour
     private void OnScheduleButtonClick(Program program)
     {
         back();
+        FirebaseAnalytics.LogEvent("Schedule_Program_page_view", new Parameter("Program_ID", program.title));
+
         if (program.playlist != null)
         {
             var interations = program.playlist.Count;
@@ -340,7 +335,13 @@ public class ScheduleManager : MonoBehaviour
                                 Button playbutton = partpart.transform.Find("playPauseButton").GetComponent<Button>();
                                 Button pausebutton = partpart.transform.Find("PauseButton (1)").GetComponent<Button>();
                                 Slider slider = partpart.transform.Find("Slider").GetComponent<Slider>();
-                                updateBuutons(playbutton, pausebutton, slider, (i + ii));
+                                Button fastforward = partpart.transform.Find("fastforward").GetComponent<Button>();
+                                Button backtrack = partpart.transform.Find("backtrack").GetComponent<Button>();
+                                TextMeshProUGUI curretTime = partpart.transform.Find("timetotal").GetComponent<TextMeshProUGUI>();
+                                TextMeshProUGUI totalTime = partpart.transform.Find("timecurret").GetComponent<TextMeshProUGUI>();
+                                title.text = text + " - " + program.playlist[ii].data[i].title;
+                                string TITELANDPARTTITEL = program.title + " : "+title.text;
+                                updateBuutons(playbutton, pausebutton, slider, (i + ii), fastforward, backtrack, curretTime, totalTime, TITELANDPARTTITEL);
 
                                 if (System.DateTime.TryParse(program.schedule[0].start, out System.DateTime eeventDate))
                                 {
@@ -364,7 +365,8 @@ public class ScheduleManager : MonoBehaviour
 
                                
 
-                                title.text = text + " - " + program.playlist[ii].data[i].title;
+                                
+                                
                             }
                         }
                     }
@@ -398,22 +400,28 @@ public class ScheduleManager : MonoBehaviour
 
     
 
-    public void updateBuutons(Button playthisbutton, Button pasuebutton, Slider slider, int which)
+    public void updateBuutons(Button playthisbutton, Button pasuebutton, Slider slider, int which, Button ff, Button rewid, TextMeshProUGUI ct, TextMeshProUGUI tt, string titel)
     {
         Debug.Log("THE BUTTON: " + playthisbutton.name + "which: " + which);
         slider.onValueChanged.RemoveAllListeners();
         slider.onValueChanged.AddListener(delegate { ValueChangeCheck(slider); });
         Sliderr = slider;
         playthisbutton.onClick.RemoveAllListeners();
-        playthisbutton.onClick.AddListener(() => audiofuntionstart(which, slider));
+        playthisbutton.onClick.AddListener(() => audiofuntionstart(which, slider, ct, tt, titel));
         pasuebutton.onClick.RemoveAllListeners();
         pasuebutton.onClick.AddListener(() => audiofuntionstop(which));
+        ff.onClick.RemoveAllListeners();
+        ff.onClick.AddListener(() => audiofunctionForward(which));
+        rewid.onClick.RemoveAllListeners();
+        rewid.onClick.AddListener(() => audioFuntionBackwards(which));
         pausebuttons.Add(pasuebutton);
         playbuttons.Add(playthisbutton);
 
     }
-    public void audiofuntionstart(int clip, Slider slider)
+    public void audiofuntionstart(int clip, Slider slider, TextMeshProUGUI ct, TextMeshProUGUI tt, string titel)
     {
+        FirebaseAnalytics.LogEvent("Schedule_Program_episode_play", new Parameter("Episode_ID", titel));
+
         InvokeRepeating("updateslider", 1, 1);
         foreach (MediaPlayer m in mediaPlayer)
         {
@@ -428,16 +436,50 @@ public class ScheduleManager : MonoBehaviour
         }
 
 
+        TimeSpan ts = TimeSpan.FromSeconds(mediaPlayer[clip].Info.GetDuration());
+        if (ts.Hours > 0)
+        {
+            tt.text = ts.ToString("h\\:mm\\:ss");
+
+        }
+        else { tt.text = ts.ToString("mm\\:ss"); }
+
+
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[clip].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            ct.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { ct.text = tss.ToString("mm\\:ss"); }
+
         Debug.Log("clip =" + clip);
+        mediaPlayer[clip].Events.AddListener(HandleEvent);
         mediaPlayer[clip].Play();
         TimeRanges seekRanges = mediaPlayer[clip].Control.GetSeekableTimes();
 
         slider.maxValue = (float)seekRanges.MaxTime;
+        curt = ct;
+        tott = tt;
+        currentSlider = slider;
         nowplayingclip = clip;
+        if (playbuttons.Count > clip + 1)
+        {
+
+            PLAYINGNEXT = playbuttons[clip + 1];
+
+        }
+       
+
 
         //audioSource.clip = audioClips[clip];
         //audioSource.Play();
     }
+    public void playnextclip()
+    {
+        PLAYINGNEXT.onClick.Invoke();
+    }
+
     public void audiofuntionstop(int clip)
     {
         Debug.Log("clip =" + clip);
@@ -447,17 +489,71 @@ public class ScheduleManager : MonoBehaviour
 
     public void ValueChangeCheck(Slider slider)
     {
-       
+
         mediaPlayer[nowplayingclip].Control.SeekFast(slider.value);
-       
+
+
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[nowplayingclip].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            curt.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { curt.text = tss.ToString("mm\\:ss"); }
+
+    }
+    public void audiofunctionForward(int i)
+    {
+        mediaPlayer[i].Control.Seek(mediaPlayer[i].Control.GetCurrentTime() + 15);
+
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[i].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            curt.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { curt.text = tss.ToString("mm\\:ss"); }
+    }
+    public void audioFuntionBackwards(int i)
+    {
+        mediaPlayer[i].Control.Seek(mediaPlayer[i].Control.GetCurrentTime() - 15);
+
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[i].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            curt.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { curt.text = tss.ToString("mm\\:ss"); }
+
+
     }
     public void updateslider()
     {
-        Sliderr.onValueChanged.RemoveAllListeners();
+        currentSlider.onValueChanged.RemoveAllListeners();
 
-        Sliderr.value = (float)mediaPlayer[nowplayingclip].Control.GetCurrentTime();
+        float F = (float)mediaPlayer[nowplayingclip].Control.GetCurrentTime();
+        currentSlider.value = F;
 
-        Sliderr.onValueChanged.AddListener(delegate { ValueChangeCheck(Sliderr); });
+
+        currentSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(currentSlider); });
+
+
+        TimeSpan tss = TimeSpan.FromSeconds(mediaPlayer[nowplayingclip].Control.GetCurrentTime());
+        if (tss.Hours > 0)
+        {
+            curt.text = tss.ToString("h\\:mm\\:ss");
+
+        }
+        else { curt.text = tss.ToString("mm\\:ss"); }
+
+        TimeSpan ts = TimeSpan.FromSeconds(mediaPlayer[nowplayingclip].Info.GetDuration());
+        if (ts.Hours > 0)
+        {
+            tott.text = ts.ToString("h\\:mm\\:ss");
+
+        }
+        else { tott.text = ts.ToString("mm\\:ss"); }
 
 
     }
@@ -475,6 +571,27 @@ public class ScheduleManager : MonoBehaviour
             }
         }
     }
+    void HandleEvent(MediaPlayer mp, MediaPlayerEvent.EventType eventType, ErrorCode code)
+    {
+        Debug.Log("MediaPlayer " + mp.name + " generated event: " + eventType.ToString());
+        if (eventType == MediaPlayerEvent.EventType.Unpaused)
+        {
+            cameraa.GetComponent<masteraudio>().fixpasuetomatch();
+        }
 
-   
+        if (eventType == MediaPlayerEvent.EventType.FinishedPlaying)
+        {
+            Debug.Log("we got this!");
+
+            playnextclip();
+        }
+
+        if (eventType == MediaPlayerEvent.EventType.Error)
+        {
+            Debug.LogError("Error: " + code);
+        }
+    }
+
+
+
 }
